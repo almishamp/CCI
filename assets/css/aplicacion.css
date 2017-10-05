@@ -1,0 +1,14 @@
+.mayusculas {
+	text-transform:uppercase
+}
+
+#contenido_filtro{
+    width:100%;
+    border:1px solid #d3d3d3;
+}
+
+
+#div_filtros {
+    width:100%;
+    border:2px solid #d3d3d3;
+}
