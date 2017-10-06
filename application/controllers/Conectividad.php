@@ -114,6 +114,7 @@ class Conectividad extends Main_Controller {
 
 	public function filtrar(){
     	$modalidad = $_POST['dataFiltro'];
+
     	
 
 		//if(count($modalidad) > 0){
@@ -140,6 +141,56 @@ class Conectividad extends Main_Controller {
 		$catalogo = $_POST['catalogo'];
 		echo json_encode($this->catalogos_model->getCatalogo($catalogo));
 	}
+
+	public function filtrarModalidad(){
+   		$dataResultado = array();
+    	$modalidad = $_POST['dataFiltro'];
+    	$filtrosArray = $_POST['filtrosArray'];
+
+    	if(count($filtrosArray) == 0)
+			$data = $this->conectividad_model->getListConectividadFiltros();
+    	else
+    		$data = $filtrosArray;
+		
+		foreach ($data as $conectividad) {
+
+			if(count($modalidad) <8 AND count($modalidad) > 0){
+				foreach ($modalidad as $mod) {
+					if($mod['idModalidad'] == $conectividad['idModalidad'])
+						array_push($dataResultado, $conectividad);
+				}
+			}
+			
+		}
+		//print_r(count($dataResultado));
+		echo json_encode($dataResultado);
+	}
+
+	public function filtrarMunicipios(){
+   		$dataResultado = array();
+    	$municipios = $_POST['dataFiltro'];
+    	$filtrosArray = $_POST['filtrosArray'];
+
+		if(count($filtrosArray) == 0)
+			$data = $this->conectividad_model->getListConectividadFiltros();
+    	else
+    		$data = $filtrosArray;
+    	
+		foreach ($data as $conectividad) {
+
+			if(count($municipios) <18 AND count($municipios) > 0){
+				foreach ($municipios as $municipio) {
+					if($municipio['idMunicipio'] == $conectividad['idMunicipio'])
+						array_push($dataResultado, $conectividad);
+				}
+			}
+			
+		}
+		//print_r(count($dataResultado));
+		echo json_encode($dataResultado);
+	}
+
+
 
 	
 

@@ -2,9 +2,10 @@
   var edicion = false;
   var opcionConectividad = 1;
   var mostrarElemnetos = 0;
-  var filtro = [];
+  var filtrosArray = [];
   var busquedaActual = 0;
   var busquedaAnterior = 0;
+  var numVeces = 0;
   
 
   $(document).ready(function(){
@@ -527,7 +528,6 @@
           async: false,
           success: function(response) {
             data = response;
-            alert(data + " :::");
             $('#tCatProgramas').bootstrapTable('load', data);
           }
       }); 
@@ -905,8 +905,6 @@
                         "&status=" + $('#selectStatusP').val() +
                         "&idCatPrograma=" + idCatPrograma +
                         "&idTipoPrograma=" + $('#selectTipoPrograma').val();
-                        alert(valoresForm);
-
       $.ajax({
           url : metodo,
           type: "POST",
@@ -1164,7 +1162,7 @@
   }
 
 
-  var filtrarDatos = function(dataFiltro){
+ /* var filtrarDatos = function(dataFiltro){
     //Variable para saber el numero de filtros
     data = [];
     //var dataCTS = $('#tCTS').bootstrapTable('getSelections');
@@ -1177,7 +1175,7 @@
           data: {dataFiltro: dataFiltro},
           success: function(response) {
            data = response;
-           filtros = data; 
+           filtrosArray = data; 
            $('#tConectividad').bootstrapTable('load', data);
            $('#modal_filtros').modal('hide');
            busquedaAnterior = busquedaActual;
@@ -1212,9 +1210,72 @@
     }
     if(busquedaAnterior != busquedaActual){
 
-        alert(filtros);
+        alert('Filtros::' + filtros);
       
     }
+  }  */
+
+   var filtrarDatos = function(dataFiltro){
+    data = [];
+
+    if(busquedaActual == 1)
+      var url = 'filtrarModalidad';
+    if(busquedaActual == 2)
+      var url = 'filtrarMunicipios';
+    if(busquedaActual == 3)
+      var url = 'filtrarTurno';
+    if(busquedaActual == 4)
+      var url = 'filtrarNivelEducativo';
+
+    //var dataCTS = $('#tCTS').bootstrapTable('getSelections');
+    if(busquedaAnterior === 0){
+        $.ajax({
+          url : url,
+          type: "POST",
+          dataType: "JSON", 
+          async: false,
+          data: {dataFiltro: dataFiltro, filtrosArray: filtrosArray},
+          success: function(response) {
+           data = response;
+           dataFiltro = data; 
+           $('#tConectividad').bootstrapTable('load', data);
+           $('#modal_filtros').modal('hide');
+          // busquedaAnterior = busquedaActual;
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+        });      
+    }
+    else{
+      $.ajax({
+          url : url,
+          type: "POST",
+          dataType: "JSON", 
+          async: false,
+          data: {dataFiltro: dataFiltro, filtrosArray: filtrosArray},
+          success: function(response) {
+           data = response;
+           dataFiltro = data; 
+           $('#tConectividad').bootstrapTable('load', data);
+           $('#modal_filtros').modal('hide');
+          // busquedaAnterior = busquedaActual;
+
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+      });   
+    }
+   /* if(busquedaAnterior != busquedaActual){
+        numVeces ++;
+        if(busquedaActual === 1){
+          
+        }
+      
+    }  */
   }
 
 
