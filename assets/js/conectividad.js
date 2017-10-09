@@ -70,11 +70,13 @@
         {field: 'modalidad', title: 'Modalidad', sortable: true, align: 'center'},
         {field: 'turno', title: 'Turno', sortable: true, align: 'center'},
         {field: 'municipio', title: 'Municipio', sortable: true, align: 'center'},
-        {field: 'localidad', title: 'Localidad', sortable: true, align: 'center'},     
-        {field: 'statusServicio', title: 'Status', align: 'center', sortable: true, formatter: function(value, row, index){
+        {field: 'localidad', title: 'Localidad', sortable: true, align: 'center'}, 
+        {field: 'programa', title: 'Programa', sortable: true, align: 'center'}, 
+        {field: 'nombreProveedor', title: 'Proveedor', sortable: true, align: 'center'},      
+      /*  {field: 'statusServicio', title: 'Status', align: 'center', sortable: true, formatter: function(value, row, index){
           string = value == 1 ? "<span class='btn btn-xs btn-success'>Conectividad</span>" : "<span class='btn btn-xs btn-warning'>Sin Conectividad</span>"
         return string;
-        }}
+        }} */
       ],
       onClickRow: function(row, $element, field){
         window.idConectividadSeleccionado = row.idConectividad;
@@ -194,7 +196,7 @@
       ]
     });
 
-    $('#tCNivelEducativo').bootstrapTable({
+    $('#CA_NivelEducativo').bootstrapTable({
       data: [],
       pagination: false,
       //sidePagination: 'client',
@@ -215,7 +217,7 @@
       ]
     });
 
-    $('#tCTurno').bootstrapTable({
+    $('#CA_Turno').bootstrapTable({
       data: [],
       pagination: false,
       //sidePagination: 'client',
@@ -233,6 +235,69 @@
         {checkbox: true},
         {field: 'idTurno', title: '', visible: false},
         {field: 'nombre', title: 'Turno', align: 'center'}
+      ]
+    });
+
+    $('#CA_Programa').bootstrapTable({
+      data: [],
+      pagination: false,
+      //sidePagination: 'client',
+     // pageList: [10, 20, 50, 100],
+      //search: true,
+      locale: 'es-MX',
+      classes: 'table table-hover table-condensed',
+      striped: true,
+      //toolbar: '#toolbarA',
+      iconSize: 'btn-sm',
+      clickToSelect: true,
+      //showRefresh: true,
+      //showFooter: true,
+      columns: [
+        {checkbox: true},
+        {field: 'idCatPrograma', title: '', visible: false},
+        {field: 'nombre', title: 'Programa', align: 'center'}
+      ]
+    });
+
+    $('#CA_Proveedor').bootstrapTable({
+      data: [],
+      pagination: false,
+      //sidePagination: 'client',
+     // pageList: [10, 20, 50, 100],
+      //search: true,
+      locale: 'es-MX',
+      classes: 'table table-hover table-condensed',
+      striped: true,
+      //toolbar: '#toolbarA',
+      iconSize: 'btn-sm',
+      clickToSelect: true,
+      //showRefresh: true,
+      //showFooter: true,
+      columns: [
+        {checkbox: true},
+        {field: 'idCatProveedor', title: '', visible: false},
+        {field: 'nombre', title: 'Proveedor', align: 'center'}
+      ]
+    });
+
+    $('#CA_NivelCT').bootstrapTable({
+      data: [],
+      pagination: false,
+      //sidePagination: 'client',
+     // pageList: [10, 20, 50, 100],
+      //search: true,
+      locale: 'es-MX',
+      classes: 'table table-hover table-condensed',
+      striped: true,
+      //toolbar: '#toolbarA',
+      iconSize: 'btn-sm',
+      clickToSelect: true,
+      //showRefresh: true,
+      //showFooter: true,
+      columns: [
+        {checkbox: true},
+        {field: 'idNivelCT', title: '', visible: false},
+        {field: 'nombre', title: 'Nivel CT', align: 'center'}
       ]
     });
 
@@ -406,37 +471,102 @@
   //EVENTOS para filtros de busqueda
 
   $('#btnFiltrar').click(function(){
-    var dataModalidad = $('#CA_Modalidad').bootstrapTable('getSelections');
-    var dataMunicipios = $('#CA_RegionMunicipio').bootstrapTable('getSelections');
-    var dataTurno = $('#CA_Turno').bootstrapTable('getSelections');
-    var dataNivelEducativo = $('#CA_NivelEducativo').bootstrapTable('getSelections');
-      if(dataModalidad){
-        busquedaActual = 1;
-        filtrarDatos(dataModalidad);
-      }
-      if(dataMunicipios){
-        busquedaActual = 2;
-        filtrarDatos(dataMunicipios);
-      }
-      if(dataTurno){
-        busquedaActual = 3;
-        filtrarDatos(dataTurno);
-      }
-      if(dataNivelEducativo){
-        busquedaActual = 4;
-        filtrarDatos(dataNivelEducativo);
-      }
-      
+      filtrarDatos();
   }); 
 
  $('#btn_modal_filtros_modalidad').click(function(){
     getCatalogo('CA_Modalidad');
   });
 
+
  $('#btn_modal_filtros_municipio').click(function(){
   alert('entra');
     getCatalogo('CA_RegionMunicipio');
   });
+
+ $('#btn_modal_filtros').click(function(){
+    //getCatalogo('CA_Modalidad');
+    getCatalogos();
+  });
+
+ //EVENTOS FILTROS
+ $('#btn_filtro_nivelEduc').click(function(){
+    $('#CA_Modalidad').hide();
+    $('#CA_RegionMunicipio').hide();
+    $('#CA_Turno').hide();
+    $('#CA_NivelCT').hide();
+    $('#CA_Proveedor').hide();
+    $('#CA_Programa').hide();
+    $('#CA_NivelEducativo').show();
+    comprobarFiltrosSeleccionados();
+ });
+
+ $('#btn_filtro_modalidad').click(function(){
+    $('#CA_RegionMunicipio').hide();
+    $('#CA_Turno').hide();
+    $('#CA_NivelEducativo').hide();
+    $('#CA_NivelCT').hide();
+    $('#CA_Proveedor').hide();
+    $('#CA_Programa').hide();
+    $('#CA_Modalidad').show();
+    comprobarFiltrosSeleccionados();
+ });
+
+ $('#btn_filtro_turno').click(function(){
+    $('#CA_Modalidad').hide();
+    $('#CA_RegionMunicipio').hide();
+    $('#CA_NivelCT').hide();
+    $('#CA_Proveedor').hide();
+    $('#CA_Programa').hide();
+    $('#CA_NivelEducativo').hide();
+    $('#CA_Turno').show();
+    comprobarFiltrosSeleccionados();
+ });
+
+ $('#btn_filtro_municipio').click(function(){
+    $('#CA_Modalidad').hide();
+    $('#CA_Turno').hide();
+    $('#CA_NivelEducativo').hide();
+    $('#CA_NivelCT').hide();
+    $('#CA_Proveedor').hide();
+    $('#CA_Programa').hide();
+    $('#CA_RegionMunicipio').show();
+    comprobarFiltrosSeleccionados();
+ });
+
+ $('#btn_filtro_nivelCT').click(function(){
+    $('#CA_Modalidad').hide();
+    $('#CA_Turno').hide();
+    $('#CA_NivelEducativo').hide();
+    $('#CA_Proveedor').hide();
+    $('#CA_Programa').hide();
+    $('#CA_RegionMunicipio').hide();
+    $('#CA_NivelCT').show();
+    comprobarFiltrosSeleccionados();
+ });
+
+ $('#btn_filtro_programa').click(function(){
+    $('#CA_Modalidad').hide();
+    $('#CA_Turno').hide();
+    $('#CA_NivelEducativo').hide();
+    $('#CA_NivelCT').hide();
+    $('#CA_Proveedor').hide();
+    $('#CA_RegionMunicipio').hide();
+    $('#CA_Programa').show();
+    comprobarFiltrosSeleccionados();
+ });
+
+ $('#btn_filtro_proveedor').click(function(){
+    $('#CA_Modalidad').hide();
+    $('#CA_Turno').hide();
+    $('#CA_NivelEducativo').hide();
+    $('#CA_NivelCT').hide();
+    $('#CA_Programa').hide();
+    $('#CA_RegionMunicipio').hide();
+    $('#CA_Proveedor').show();
+    comprobarFiltrosSeleccionados();
+ });
+
 
   
   //FUNCIÓN para limpiar elementos de modal de conectividad
@@ -1218,37 +1348,72 @@
    var filtrarDatos = function(dataFiltro){
     data = [];
 
-    if(busquedaActual == 1)
-      var url = 'filtrarModalidad';
-    if(busquedaActual == 2)
-      var url = 'filtrarMunicipios';
-    if(busquedaActual == 3)
-      var url = 'filtrarTurno';
-    if(busquedaActual == 4)
-      var url = 'filtrarNivelEducativo';
+    var modalidadSeleccionadas = $('#CA_Modalidad').bootstrapTable('getSelections');
+    var municipioSeleccionadas = $('#CA_RegionMunicipio').bootstrapTable('getSelections');
+    var nivelEducSeleccionadas = $('#CA_NivelEducativo').bootstrapTable('getSelections');
+    var turnoSeleccionadas = $('#CA_Turno').bootstrapTable('getSelections');
+    var nivelCTSeleccionadas = $('#CA_NivelCT').bootstrapTable('getSelections');
+    var programaSeleccionadas = $('#CA_Programa').bootstrapTable('getSelections');
+    var proveedorSeleccionadas = $('#CA_Proveedor').bootstrapTable('getSelections');
 
-    //var dataCTS = $('#tCTS').bootstrapTable('getSelections');
-    if(busquedaAnterior === 0){
-        $.ajax({
-          url : url,
+    if(modalidadSeleccionadas.length > 0 || municipioSeleccionadas.length > 0 || nivelEducSeleccionadas.length > 0 || turnoSeleccionadas.length > 0 ||
+      nivelCTSeleccionadas.length > 0 || programaSeleccionadas.length > 0 || proveedorSeleccionadas.length > 0){
+
+      $.ajax({
+          url : 'filtrarDatos',
           type: "POST",
           dataType: "JSON", 
           async: false,
-          data: {dataFiltro: dataFiltro, filtrosArray: filtrosArray},
+          data: {filtrosMod: modalidadSeleccionadas, 
+                 filtrosMunicipio: municipioSeleccionadas, 
+                 filtrosNivelEduc: nivelEducSeleccionadas,
+                 filtrosTurno: turnoSeleccionadas, 
+                 filtrosNivelCT: nivelCTSeleccionadas, 
+                 filtrosProgramas: programaSeleccionadas,
+                 filtrosProveedores: proveedorSeleccionadas},
           success: function(response) {
            data = response;
-           dataFiltro = data; 
+           filtrosArray = data; 
            $('#tConectividad').bootstrapTable('load', data);
            $('#modal_filtros').modal('hide');
           // busquedaAnterior = busquedaActual;
+
           },
           error: function (jqXHR, textStatus, errorThrown)
             {
                 alert('Error deleting data');
             }
-        });      
+      });  
+
+
+    }else{
+      $('#msjAlertD').html('Debe seleccionar por lo menos un filtro de busqueda');
+      modalAlertDanger.modal('show'); 
     }
-    else{
+
+    //var dataCTS = $('#tCTS').bootstrapTable('getSelections');
+    /*if(busquedaAnterior === 0){
+
+      $.ajax({
+        url : url,
+        type: "POST",
+        dataType: "JSON", 
+        async: false,
+        data: {dataFiltro: dataFiltro, filtrosArray: filtrosArray},
+        success: function(response) {
+         data = response;
+         dataFiltro = data; 
+         $('#tConectividad').bootstrapTable('load', data);
+         $('#modal_filtros').modal('hide');
+        // busquedaAnterior = busquedaActual;
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+          {
+              alert('Error deleting data');
+          }
+      });      
+    }
+    else{  
       $.ajax({
           url : url,
           type: "POST",
@@ -1257,7 +1422,7 @@
           data: {dataFiltro: dataFiltro, filtrosArray: filtrosArray},
           success: function(response) {
            data = response;
-           dataFiltro = data; 
+           filtrosArray = data; 
            $('#tConectividad').bootstrapTable('load', data);
            $('#modal_filtros').modal('hide');
           // busquedaAnterior = busquedaActual;
@@ -1268,7 +1433,7 @@
                 alert('Error deleting data');
             }
       });   
-    }
+   // }
    /* if(busquedaAnterior != busquedaActual){
         numVeces ++;
         if(busquedaActual === 1){
@@ -1276,6 +1441,96 @@
         }
       
     }  */
+  }
+
+  var getCatalogos = function(){
+    $.ajax({
+          url : "getCatalogos",
+          type: "POST",
+          dataType: "JSON",
+          async: false,
+          success: function(response) {
+            data = response;
+
+            if(data){
+              $('#CA_Modalidad').bootstrapTable('load', data.modalidad);
+              $('#CA_RegionMunicipio').bootstrapTable('load', data.municipios);
+              $('#CA_NivelEducativo').bootstrapTable('load', data.nivelEducativo);
+              $('#CA_Turno').bootstrapTable('load', data.turno);
+              $('#CA_NivelCT').bootstrapTable('load', data.nivelCT);
+              $('#CA_Programa').bootstrapTable('load', data.programas);
+              $('#CA_Proveedor').bootstrapTable('load', data.proveedores);
+
+
+              $('#CA_Modalidad').hide();
+              $('#CA_RegionMunicipio').hide();
+              $('#CA_Turno').hide();
+              $('#CA_NivelEducativo').show();
+              $('#CA_NivelCT').hide();
+              $('#CA_Proveedor').hide();
+              $('#CA_Programa').hide();
+
+              $('#btn_filtro_modalidad').addClass('btn-default').removeClass('btn-primary');
+              $('#btn_filtro_municipio').addClass('btn-default').removeClass('btn-primary'); 
+              $('#btn_filtro_nivelEduc').addClass('btn-default').removeClass('btn-primary');
+              $('#btn_filtro_nivelCT').addClass('btn-default').removeClass('btn-primary');
+              $('#btn_filtro_turno').addClass('btn-default').removeClass('btn-primary');
+              $('#btn_filtro_programa').addClass('btn-default').removeClass('btn-primary');
+              $('#btn_filtro_proveedor').addClass('btn-default').removeClass('btn-primary'); 
+
+              $('#modal_filtros').modal('show');
+            }
+        }
+    });   
+  }
+
+  var comprobarFiltrosSeleccionados = function(){
+    var modalidadSeleccionadas = $('#CA_Modalidad').bootstrapTable('getSelections');
+    var municipioSeleccionadas = $('#CA_RegionMunicipio').bootstrapTable('getSelections');
+    var nivelEducSeleccionadas = $('#CA_NivelEducativo').bootstrapTable('getSelections');
+    var turnoSeleccionadas = $('#CA_Turno').bootstrapTable('getSelections');
+    var nivelCTSeleccionadas = $('#CA_NivelCT').bootstrapTable('getSelections');
+    var programaSeleccionadas = $('#CA_Programa').bootstrapTable('getSelections');
+    var proveedorSeleccionadas = $('#CA_Proveedor').bootstrapTable('getSelections');
+
+
+    if(modalidadSeleccionadas.length > 0)
+     $('#btn_filtro_modalidad').addClass('btn-primary').removeClass('btn-default');
+     else 
+     $('#btn_filtro_modalidad').addClass('btn-default').removeClass('btn-primary');
+
+    if(municipioSeleccionadas.length > 0)
+      $('#btn_filtro_municipio').addClass('btn-primary').removeClass('btn-default');
+    else 
+      $('#btn_filtro_municipio').addClass('btn-default').removeClass('btn-primary');
+
+    if(nivelEducSeleccionadas.length > 0)
+      $('#btn_filtro_nivelEduc').addClass('btn-primary').removeClass('btn-default');
+    else 
+      $('#btn_filtro_nivelEduc').addClass('btn-default').removeClass('btn-primary');
+
+    if(nivelCTSeleccionadas.length > 0)
+      $('#btn_filtro_nivelCT').addClass('btn-primary').removeClass('btn-default');
+    else 
+      $('#btn_filtro_nivelCT').addClass('btn-default').removeClass('btn-primary');
+
+     if(turnoSeleccionadas.length > 0)
+      $('#btn_filtro_turno').addClass('btn-primary').removeClass('btn-default');
+    else 
+      $('#btn_filtro_turno').addClass('btn-default').removeClass('btn-primary');
+
+     if(programaSeleccionadas.length > 0)
+      $('#btn_filtro_programa').addClass('btn-primary').removeClass('btn-default');
+    else 
+      $('#btn_filtro_programa').addClass('btn-default').removeClass('btn-primary');
+
+     if(proveedorSeleccionadas.length > 0)
+      $('#btn_filtro_proveedor').addClass('btn-primary').removeClass('btn-default');
+    else 
+      $('#btn_filtro_proveedor').addClass('btn-default').removeClass('btn-primary'); 
+
+    
+
   }
 
 

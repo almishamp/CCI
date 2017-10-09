@@ -111,6 +111,11 @@ class Catalogos_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	function getListaNivelCT(){
+		$query = $this->db->get('CA_NivelCT');
+		return $query->result_array();
+	}
+
 	function getCatalogo($catalogo){
 		$query = $this->db->get("$catalogo");
 		return $query->result_array();

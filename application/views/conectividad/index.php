@@ -33,8 +33,10 @@
                   <div class="box-body">
                     <div>
                         <button type="button" class="btn btn-success" id="btnAgregarCentro">Agregar centro</button>
+                        <button type="button" class="btn btn-primary" id="btn_modal_filtros">Filtros</button>
+
                             
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filtros de busqueda</button>   
+                        <!--button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filtros de busqueda</button-->   
                     </div>
 
                     <br><br>
@@ -315,6 +317,66 @@
           <h4 id="aDetalle" class="modal-title">Detalle artículo</h4>
           <h4 id="aEdicion" class="modal-title">Edición artículo</h4>
           <h4 id="aNuevo" class="modal-title">Agregar artículo</h4>
+        </div>
+           
+          <form id="form_articulo" class="form-horizontal">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Descripción* : </label>
+                    <div class="col-md-3">
+                        <span class="help-block" id="descripcion"></span>
+                        <textarea class="form-control mayusculas" rows="5" name="descripcion_area" id="descripcion_area"></textarea>
+                        <span class="help-block"></span>
+                    </div>
+                    <label class="control-label col-md-3">Marca* : </label>
+                    <div class="col-md-3">
+                        <span class="help-block" id="marca"></span>
+                        <input type="text" class="mayusculas" name="marca_input" id="marca_input">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Modelo* : </label>
+                    <div class="col-md-3">
+                        <span class="help-block" id="modelo"></span>
+                        <input type="text" class="mayusculas" name="modelo_input" id="modelo_input">
+                        <span class="help-block"></span>
+                    </div>
+                    <label class="control-label col-md-3">Serie: </label>
+                    <div class="col-md-3">
+                        <span class="help-block" id="serie"></span>
+                        <input type="text" class="mayusculas" name="serie_input" id="serie_input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Status: </label>
+                    <div class="col-md-3">
+                        <span class="help-block" id="statusArticulo"></span>
+                        <select class="form-control xs" id="selectArticulo">
+                          <option value="1">Activo</option>
+                          <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+          </form>       
+        <div class="modal-footer">
+           <input type="button" value="Cancelar" id="btn_cancelar_art" class="btn btn-default pull-left" data-dismiss="modal">
+           <input type="button" value="Guardar Artículo" id="btnSaveArticulo" class="btn btn-success">
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div class="modal fade" id="modal_filtrar">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="btn_close_Articulo" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 id="aDetalleFiltros" class="modal-title">Filtrar</h4>
         </div>
            
           <form id="form_articulo" class="form-horizontal">

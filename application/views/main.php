@@ -242,7 +242,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="<?php echo base_url('conectividad/home')?>"><i class="fa fa-rss"></i> <span>Lista Conectividad</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-rss"></i> <span>Conectividad</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url('conectividad/home')?>">Conectados</a></li>
+            <li><a href="<?php echo base_url('conectividad/noConectados')?>">No conectados</a></li>
+            <li><a href="<?php echo base_url('conectividad/listaCompleta/')?>">Con y sin conexión</a></li>
+          </ul>
+        </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Catalogos</span>
             <span class="pull-right-container">
@@ -654,6 +665,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.modal-dialog -->
   </div>  
 
+      <!--MODAL filtros-->
+  <div class="modal fade" id="modal_filtros">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="btn_close_Filtros" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Filtros</h4>
+        </div>
+
+        <div class="modal-body" >
+
+
+          <form id="form_articulo" class="form-horizontal">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="control-label col-md-1">Filtro : </label>
+                    <div class="btn-group-vertical col-md-3">
+                      <button class="btn btn-default" type="button" id="btn_filtro_nivelEduc">Nivel Educativo</button>
+                      <button class="btn btn-default" type="button" id="btn_filtro_nivelCT">  NivelCT  </button>
+                      <button class="btn btn-default" type="button" id="btn_filtro_modalidad">Modalidad</button>
+                      <button class="btn btn-default" type="button" id="btn_filtro_turno">Turno</button>
+                      <button class="btn btn-default" type="button" id="btn_filtro_municipio">Municipio</button>
+                      <button class="btn btn-default" type="button" id="btn_filtro_programa">Programa</button>
+                      <button class="btn btn-default" type="button" id="btn_filtro_proveedor">Proveedor</button>
+                      <!--button class="btn btn-default" type="button" id="btn_filtro_municipio">Municipio</button-->
+                    </div>
+                    <div class="col-md-6">
+                        <table id="CA_Modalidad"></table>
+                        <table id="CA_RegionMunicipio"></table>
+                        <table id="CA_NivelEducativo"></table>
+                        <table id="CA_Turno"></table>
+                        <table id="CA_Programa"></table>
+                        <table id="CA_Proveedor"></table>
+                        <table id="CA_NivelCT"></table>
+                    </div>
+                    
+                </div>
+                <!--div class="form-group">
+                  <div class="col-md-8">
+                        <table id="CA_Modalidad"></table>
+                        <table id="CA_RegionMunicipio"></table>
+                        <table id="CA_NivelEducativo"></table>
+                        <table id="CA_Turno"></table>
+                    </div>
+                </div-->
+            </div>
+          </form>
+        </div>
+          
+        <div class="modal-footer">
+           <input type="button" value="Cancelar" id="btn_cancelar_filtros" class="btn btn-default pull-left" data-dismiss="modal">
+           <input type="button" value="Filtrar" id="btnFiltrar" class="btn btn-success">
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
   <!-- Modal para bloquear la vista mientras se realizan peticiones ajax al servidor -->
   <div class="modal modal-info fade" id="modalAlertInfo">
     <div class="modal-dialog modal-sm">
@@ -728,34 +799,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.modal-dialog -->
   </div>
 
-    <!--MODAL filtros-->
-  <div class="modal fade" id="modal_filtros">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" id="btn_close_Filtros" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Filtros</h4>
-        </div>
 
-        <div class="modal-body" >
-          <form id="form_articulo">
-            <table id="CA_Modalidad"></table>
-            <table id="CA_RegionMunicipio"></table>
-            <table id="CA_NivelEducativo"></table>
-            <table id="CA_Turno"></table>
-          </form>
-        </div>
-          
-        <div class="modal-footer">
-           <input type="button" value="Cancelar" id="btn_cancelar_filtros" class="btn btn-default pull-left" data-dismiss="modal">
-           <input type="button" value="Filtrar" id="btnFiltrar" class="btn btn-success">
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
 
 <!-- ./wrapper -->
 

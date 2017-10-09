@@ -108,91 +108,81 @@ class Conectividad extends Main_Controller {
 		$data['modalidad'] = $this->catalogos_model->getListaModalidad();
 		$data['nivelEducativo'] = $this->catalogos_model->getListaNivelEducativo();
 		$data['turno'] = $this->catalogos_model->getListaTurno();
+		$data['nivelCT'] = $this->catalogos_model->getListaNivelCT();
+		$data['programas'] = $this->catalogos_model->getListaCatalogoProgramas();
+		$data['proveedores'] = $this->catalogos_model->getListaCatalogoProveedores();
+
 
 		echo json_encode($data);
 	}
 
-	public function filtrar(){
-    	$modalidad = $_POST['dataFiltro'];
-
+	public function filtrarDatos(){
     	
+    	$idsModalidad = array();
+    	$idsMunicipio = array();
+    	$idsNivelEducativo = array();
+    	$idsNivelCT = array();
+    	$idsTurno = array();
+    	$idsProveedores = array();
+		$idsProgramas = array();
 
-		//if(count($modalidad) > 0){
-		//   print_r($_POST['dataMod']);
-			
-		//}
+    	if(isset($_POST['filtrosMod'])){
+    		$modalidad = $_POST['filtrosMod'];
+    		foreach ($modalidad as $mod) {
+    			array_push($idsModalidad, $mod['idModalidad']);
+    		}
+    	}
+    	if(isset($_POST['filtrosMunicipio'])){
+    		$municipio = $_POST['filtrosMunicipio'];
+    		foreach ($municipio as $mun) {
+    			array_push($idsMunicipio, $mun['idMunicipio']);
+    		}
+    	}
+
+    	if(isset($_POST['filtrosNivelEduc'])){
+    		$nivelEducativo = $_POST['filtrosNivelEduc'];
+    		foreach ($nivelEducativo as $nivel) {
+    			array_push($idsNivelEducativo, $nivel['idNivelEducativo']);
+    		}
+    	}
+
+    	if(isset($_POST['filtrosNivelCT'])){
+    		$nivelCT = $_POST['filtrosNivelCT'];
+    		foreach ($nivelCT as $nivelct) {
+    			array_push($idsNivelCT, $nivelct['idNivelCT']);
+    		}
+    	}
+
+    	if(isset($_POST['filtrosTurno'])){
+    		$dataTurno = $_POST['filtrosTurno'];
+    		foreach ($dataTurno as $turno) {
+    			array_push($idsTurno, $turno['idTurno']);
+    		}
+    	}
+
+    	if(isset($_POST['filtrosProgramas'])){
+    		$dataProgramas = $_POST['filtrosProgramas'];
+    		foreach ($dataProgramas as $programa) {
+    			array_push($idsProgramas, $programa['idCatPrograma']);
+    		}
+    	}
+
+    	if(isset($_POST['filtrosProveedores'])){
+    		$dataProveedores = $_POST['filtrosProveedores'];
+    		foreach ($dataProveedores as $proveedores) {
+    			array_push($idsProveedores, $proveedores['idCatProveedor']);
+    		}
+    	}
+
 		$dataResultado = array();
-		$data = $this->conectividad_model->getListConectividadFiltros();
-		foreach ($data as $conectividad) {
-
-			if(count($modalidad) <8 AND count($modalidad) > 0){
-				foreach ($modalidad as $mod) {
-					if($mod['idModalidad'] == $conectividad['idModalidad'])
-						array_push($dataResultado, $conectividad);
-				}
-			}
-			
-		}
-		//print_r(count($dataResultado));
-		echo json_encode($dataResultado);
+		$data = $this->conectividad_model->getListConectividadFiltros($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $idsProgramas, $idsProveedores);
+		echo json_encode($data);
 	}
 
 	public function getCatalogo(){
 		$catalogo = $_POST['catalogo'];
 		echo json_encode($this->catalogos_model->getCatalogo($catalogo));
-	}
-
-	public function filtrarModalidad(){
-   		$dataResultado = array();
-    	$modalidad = $_POST['dataFiltro'];
-    	$filtrosArray = $_POST['filtrosArray'];
-
-    	if(count($filtrosArray) == 0)
-			$data = $this->conectividad_model->getListConectividadFiltros();
-    	else
-    		$data = $filtrosArray;
-		
-		foreach ($data as $conectividad) {
-
-			if(count($modalidad) <8 AND count($modalidad) > 0){
-				foreach ($modalidad as $mod) {
-					if($mod['idModalidad'] == $conectividad['idModalidad'])
-						array_push($dataResultado, $conectividad);
-				}
-			}
-			
-		}
-		//print_r(count($dataResultado));
-		echo json_encode($dataResultado);
-	}
-
-	public function filtrarMunicipios(){
-   		$dataResultado = array();
-    	$municipios = $_POST['dataFiltro'];
-    	$filtrosArray = $_POST['filtrosArray'];
-
-		if(count($filtrosArray) == 0)
-			$data = $this->conectividad_model->getListConectividadFiltros();
-    	else
-    		$data = $filtrosArray;
-    	
-		foreach ($data as $conectividad) {
-
-			if(count($municipios) <18 AND count($municipios) > 0){
-				foreach ($municipios as $municipio) {
-					if($municipio['idMunicipio'] == $conectividad['idMunicipio'])
-						array_push($dataResultado, $conectividad);
-				}
-			}
-			
-		}
-		//print_r(count($dataResultado));
-		echo json_encode($dataResultado);
-	}
-
-
-
-	
+	}	
 
 }
 
