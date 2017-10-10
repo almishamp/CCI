@@ -8,9 +8,9 @@ class Conectividad_model extends CI_Model{
 		$this->load->database('db1');
 	}
 
-	function getListConectividad($statusServicio){
+	function getListConectividad(){
 
-		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
+		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, p.status as status, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
 		$this->db->from('conectividad as c');
 		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
 		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');
@@ -25,6 +25,32 @@ class Conectividad_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	function getListaSinConexion(){
+		$this->db->select('idConectividad, claveCT, nombreCT, statusServicio, localidad, colonia, rm.nombreMunicipio as 				municipio, m.nombre as modalidad, ne.nombre as nivelEducativo, t.nombre as turno');   
+		$this->db->from('conectividad as c');
+		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
+		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');
+		$this->db->join('CA_NivelEducativo as ne', 'ne.idNivelEducativo = c.idNivelEducativo');
+		$this->db->join('CA_Turno as t', 't.idTurno = c.idTurno');
+		$this->db->where('statusServicio', 0);
+		$query = $this->db->get();
+		return $query->result_array();
+
+
+
+	}
+
+	function getListaConSinConexion(){
+		$this->db->select('idConectividad, claveCT, nombreCT, statusServicio, localidad, colonia, rm.nombreMunicipio as 				municipio, m.nombre as modalidad, ne.nombre as nivelEducativo, t.nombre as turno');    
+		$this->db->from('conectividad as c');
+		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
+		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');
+		$this->db->join('CA_NivelEducativo as ne', 'ne.idNivelEducativo = c.idNivelEducativo');
+		$this->db->join('CA_Turno as t', 't.idTurno = c.idTurno');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 	function getCentro($idConectividad){
 		$this->db->select('idConectividad, claveCT, nombreCT, statusServicio, latitud, longitud, nombreRespSitio, 					   nombreRespInventario, localidad, colonia, rm.nombreMunicipio as municipio, m.nombre as         modalidad, ne.nombre as nivelEducativo, t.nombre as turno');    
 		$this->db->from('conectividad as c');
@@ -35,7 +61,6 @@ class Conectividad_model extends CI_Model{
 		$this->db->where('idConectividad', $idConectividad);
 		$query = $this->db->get();
 		return $query->row_array();
-
 	}
 
 	function getCentroByClave($claveCT){
@@ -92,9 +117,9 @@ class Conectividad_model extends CI_Model{
 		return $this->db->affected_rows();
 	}
 
-	function getListConectividadFiltros($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $idsProgramas, $idsProveedores){
+	function getListConectividadFiltros($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $idsProgramas, $idsProveedores, $localidades){
 
-		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
+		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, p.status as status, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
 		$this->db->from('conectividad as c');
 		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
 		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');
@@ -113,6 +138,9 @@ class Conectividad_model extends CI_Model{
 		if(count($idsMunicipio) > 0){
 		    $this->db->where_in('c.idMunicipio', $idsMunicipio);
 		}
+		if(count($localidades) > 0){
+		    $this->db->where_in('c.localidad', $localidades);
+		}
 		if(count($idsNivelEducativo) > 0){
 		    $this->db->where_in('c.idNivelEducativo', $idsNivelEducativo);
 		}
@@ -129,6 +157,43 @@ class Conectividad_model extends CI_Model{
 		    $this->db->where_in('cpv.idCatProveedor', $idsProveedores);
 		}
 
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	function getListConectividadFiltrosConSinConexion($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $opcionConectividad, $localidades){
+
+		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT');    
+		$this->db->from('conectividad as c');
+		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
+		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');
+		$this->db->join('CA_NivelEducativo as ne', 'ne.idNivelEducativo = c.idNivelEducativo');
+		$this->db->join('CA_Turno as t', 't.idTurno = c.idTurno');
+		$this->db->join('CA_NivelCT nct', 'nct.idNivelCT = c.idNivelCT');
+		if($opcionConectividad == 2){
+		  $this->db->where('c.statusServicio', 0);
+		}
+		//$this->db->where_in('c.idMunicipio', $idsMunicipio);
+		if(count($idsModalidad) > 0){
+		    $this->db->where_in('c.idModalidad', $idsModalidad);
+		}
+		if(count($idsMunicipio) > 0){
+		    $this->db->where_in('c.idMunicipio', $idsMunicipio);
+		}
+		if(count($localidades) > 0){
+		    $this->db->where_in('c.localidad', $localidades);
+		}
+		if(count($idsNivelEducativo) > 0){
+		    $this->db->where_in('c.idNivelEducativo', $idsNivelEducativo);
+		}
+		if(count($idsNivelCT) > 0){
+		    $this->db->where_in('c.idNivelCT', $idsNivelCT);
+		}
+		if(count($idsTurno) > 0){
+		    $this->db->where_in('c.idTurno', $idsTurno);
+		}
 
 		$query = $this->db->get();
 

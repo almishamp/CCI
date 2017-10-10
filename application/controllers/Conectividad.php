@@ -11,7 +11,6 @@ class Conectividad extends Main_Controller {
 		$this->load->model('conectividad_model');
 		$this->load->model('catalogos_model');
 	}
-
 	
 	public function home(){
 		echo $this->templates->render('conectividad/index');
@@ -19,14 +18,25 @@ class Conectividad extends Main_Controller {
 
 	public function getListaConectividad(){
 		$statusServicio = $_POST['statusServicio'];
-		echo json_encode($this->conectividad_model->getListConectividad($statusServicio));
+		if($statusServicio == 1){
+			$data = $this->conectividad_model->getListConectividad();
+			$bandera = 1;
+		}
+		if($statusServicio == 2){
+			$data = $this->conectividad_model->getListaSinConexion();
+			$bandera = 2;
+		}
+		if($statusServicio == 3){
+			$data = $this->conectividad_model->getListaConSinConexion();
+		    $bandera = 3;
+		}
+		echo json_encode(array("bandera" => $bandera, "lista" => $data)); 
 	}
 
 	public function getListaProgramas(){
 		$idConectividad = $_POST['idConectividad'];
 		echo json_encode($this->conectividad_model->getProgramas($idConectividad));
 	}
-
 
 	public function show(){
 		$idConectividad = $_POST['idConectividad'];
@@ -111,6 +121,7 @@ class Conectividad extends Main_Controller {
 		$data['nivelCT'] = $this->catalogos_model->getListaNivelCT();
 		$data['programas'] = $this->catalogos_model->getListaCatalogoProgramas();
 		$data['proveedores'] = $this->catalogos_model->getListaCatalogoProveedores();
+		$data['localidad'] = $this->catalogos_model->getListaLocalidades();
 
 
 		echo json_encode($data);
@@ -125,6 +136,8 @@ class Conectividad extends Main_Controller {
     	$idsTurno = array();
     	$idsProveedores = array();
 		$idsProgramas = array();
+		$localidades = array();
+		$opcionConectividad = $_POST['opcionConectividad'];
 
     	if(isset($_POST['filtrosMod'])){
     		$modalidad = $_POST['filtrosMod'];
@@ -136,6 +149,13 @@ class Conectividad extends Main_Controller {
     		$municipio = $_POST['filtrosMunicipio'];
     		foreach ($municipio as $mun) {
     			array_push($idsMunicipio, $mun['idMunicipio']);
+    		}
+    	}
+
+    	if(isset($_POST['filtrosLocalidad'])){
+    		$localidadesList = $_POST['filtrosLocalidad'];
+    		foreach ($localidadesList as $localidad) {
+    			array_push($localidades, $localidad['localidad']);
     		}
     	}
 
@@ -175,8 +195,31 @@ class Conectividad extends Main_Controller {
     	}
 
 		$dataResultado = array();
-		$data = $this->conectividad_model->getListConectividadFiltros($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $idsProgramas, $idsProveedores);
-		echo json_encode($data);
+
+		if($opcionConectividad == 1){
+			$data = $this->conectividad_model->getListConectividadFiltros($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $idsProgramas, $idsProveedores, $localidades);
+
+			$dataFiltrado = array();
+			$arrayTemporal = array();
+			$idAnterior = 0;
+			foreach ($data as $centro) {
+				array_push($arrayTemporal, $centro['programa']);
+				if($idAnterior == $centro['idConectividad']){
+				}else{
+					$centro['programas'] = $arrayTemporal;
+					array_push($dataFiltrado, $centro);
+					//print_r(expression)
+					$arrayTemporal = [];
+				}
+				$idAnterior = $centro['idConectividad'];
+			}
+		}
+
+		if($opcionConectividad == 2 || $opcionConectividad == 3){
+			$data = $this->conectividad_model->getListConectividadFiltrosConSinConexion($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $opcionConectividad, $localidades);
+		}
+		
+		echo json_encode($dataFiltrado);
 	}
 
 	public function getCatalogo(){

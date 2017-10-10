@@ -31,15 +31,13 @@
 
                   <!-- /.box-header -->
                   <div class="box-body">
-                    <div class="col-md-9">
+                    <div>
                         <button type="button" class="btn btn-success" id="btnAgregarCentro">Agregar centro</button>
-                        <button type="button" class="btn btn-primary" id="btn_modal_filtros">Filtros</button> 
+                        <button type="button" class="btn btn-primary" id="btn_modal_filtros">Filtros</button>
+
+                            
+                        <!--button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Filtros de busqueda</button-->   
                     </div>
-                    <div class="btn-group-vertical col-md-3">
-                      <button class="btn btn-default" type="button" id="btn_conConexion">Conectados</button>
-                      <button class="btn btn-default" type="button" id="btn_sinConexion">No conectados  </button>
-                      <button class="btn btn-default" type="button" id="btn_con_sin_Conexion">Con y sin conexión</button>
-                    </div> 
 
                     <br><br>
                     <div class="collapse" id="collapseExample">

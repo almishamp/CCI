@@ -120,6 +120,14 @@ class Catalogos_model extends CI_Model{
 		$query = $this->db->get("$catalogo");
 		return $query->result_array();
 	}
+
+	function getListaLocalidades(){
+		$this->db->distinct();
+		$this->db->select('localidad');
+		$query = $this->db->get('conectividad');
+
+		return $query->result_array();
+	}
 	
 	
 

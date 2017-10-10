@@ -688,6 +688,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <button class="btn btn-default" type="button" id="btn_filtro_modalidad">Modalidad</button>
                       <button class="btn btn-default" type="button" id="btn_filtro_turno">Turno</button>
                       <button class="btn btn-default" type="button" id="btn_filtro_municipio">Municipio</button>
+                      <button class="btn btn-default" type="button" id="btn_filtro_localidad">Localidad</button>
                       <button class="btn btn-default" type="button" id="btn_filtro_programa">Programa</button>
                       <button class="btn btn-default" type="button" id="btn_filtro_proveedor">Proveedor</button>
                       <!--button class="btn btn-default" type="button" id="btn_filtro_municipio">Municipio</button-->
@@ -700,6 +701,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <table id="CA_Programa"></table>
                         <table id="CA_Proveedor"></table>
                         <table id="CA_NivelCT"></table>
+                        <table id="CA_Localidad"></table>
                     </div>
                     
                 </div>

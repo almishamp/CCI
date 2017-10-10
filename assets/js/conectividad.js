@@ -72,7 +72,8 @@
         {field: 'municipio', title: 'Municipio', sortable: true, align: 'center'},
         {field: 'localidad', title: 'Localidad', sortable: true, align: 'center'}, 
         {field: 'programa', title: 'Programa', sortable: true, align: 'center'}, 
-        {field: 'nombreProveedor', title: 'Proveedor', sortable: true, align: 'center'},      
+        {field: 'nombreProveedor', title: 'Proveedor', sortable: true, align: 'center'},
+        {field: 'programas', title: 'Programas', sortable: true, align: 'center'},       
       /*  {field: 'statusServicio', title: 'Status', align: 'center', sortable: true, formatter: function(value, row, index){
           string = value == 1 ? "<span class='btn btn-xs btn-success'>Conectividad</span>" : "<span class='btn btn-xs btn-warning'>Sin Conectividad</span>"
         return string;
@@ -301,6 +302,26 @@
       ]
     });
 
+    $('#CA_Localidad').bootstrapTable({
+      data: [],
+      pagination: false,
+      //sidePagination: 'client',
+     // pageList: [10, 20, 50, 100],
+      //search: true,
+      locale: 'es-MX',
+      classes: 'table table-hover table-condensed',
+      striped: true,
+      //toolbar: '#toolbarA',
+      iconSize: 'btn-sm',
+      clickToSelect: true,
+      //showRefresh: true,
+      //showFooter: true,
+      columns: [
+        {checkbox: true},
+        {field: 'localidad', title: 'Localidad', align: 'center'}
+      ]
+    });
+
   });
 
  //EVENTO para mostrar modal de detalles de conectividad
@@ -347,6 +368,24 @@
   $('#btnBuscarConectividad').click(function(){
     buscarCentro();
   });
+
+  //EVENTOS para mostrar las listas de conectividad con los distintos estatus de conexión
+  $('#btn_conConexion').click(function() {
+    opcionConectividad = 1;
+    recargarConectividad();
+  });
+
+  $('#btn_sinConexion').click(function() {
+    opcionConectividad = 2;
+    recargarConectividad();
+  });
+
+  $('#btn_con_sin_Conexion').click(function() {
+    opcionConectividad = 3;
+    recargarConectividad();
+  });
+
+
 
    //EVENTO para mostrar modal de detalles de programa
   $('#btnMostrarPrograma').click(function(){
@@ -498,6 +537,7 @@
     $('#CA_Proveedor').hide();
     $('#CA_Programa').hide();
     $('#CA_NivelEducativo').show();
+    $('#CA_Localidad').hide();
     comprobarFiltrosSeleccionados();
  });
 
@@ -509,6 +549,7 @@
     $('#CA_Proveedor').hide();
     $('#CA_Programa').hide();
     $('#CA_Modalidad').show();
+    $('#CA_Localidad').hide();
     comprobarFiltrosSeleccionados();
  });
 
@@ -520,6 +561,7 @@
     $('#CA_Programa').hide();
     $('#CA_NivelEducativo').hide();
     $('#CA_Turno').show();
+    $('#CA_Localidad').hide();
     comprobarFiltrosSeleccionados();
  });
 
@@ -530,6 +572,7 @@
     $('#CA_NivelCT').hide();
     $('#CA_Proveedor').hide();
     $('#CA_Programa').hide();
+    $('#CA_Localidad').hide();
     $('#CA_RegionMunicipio').show();
     comprobarFiltrosSeleccionados();
  });
@@ -552,6 +595,7 @@
     $('#CA_NivelCT').hide();
     $('#CA_Proveedor').hide();
     $('#CA_RegionMunicipio').hide();
+    $('#CA_Localidad').hide();
     $('#CA_Programa').show();
     comprobarFiltrosSeleccionados();
  });
@@ -563,11 +607,22 @@
     $('#CA_NivelCT').hide();
     $('#CA_Programa').hide();
     $('#CA_RegionMunicipio').hide();
+    $('#CA_Localidad').hide();
     $('#CA_Proveedor').show();
     comprobarFiltrosSeleccionados();
  });
 
-
+ $('#btn_filtro_localidad').click(function(){
+    $('#CA_Modalidad').hide();
+    $('#CA_Turno').hide();
+    $('#CA_NivelEducativo').hide();
+    $('#CA_NivelCT').hide();
+    $('#CA_Programa').hide();
+    $('#CA_RegionMunicipio').hide();
+    $('#CA_Proveedor').hide();
+    $('#CA_Localidad').show();
+    comprobarFiltrosSeleccionados();
+ });
   
   //FUNCIÓN para limpiar elementos de modal de conectividad
   var limpiarElementosConectividad = function(){
@@ -590,14 +645,21 @@
           async: false,
           beforeSend: function(){
               $('#msjAlertI').html('Cargando información, por favor espere...');
-               modalAlertInfo.modal('show');
-            },
+              modalAlertInfo.modal('show');
+          },
           success: function(response) {
             data = response;
+            $('#btn_conConexion').addClass('btn-primary').removeClass('btn-default'); 
+            $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
+            $('#btn_con_sin_Conexion').addClass('btn-default').removeClass('btn-primary');
+            $('#tConectividad').bootstrapTable('showColumn', 'programa');
+            $('#tConectividad').bootstrapTable('showColumn', 'proveedor');
+
+            $('#tConectividad').bootstrapTable('showColumn', 'nombre_proveedor');
             modalAlertInfo.modal('hide');
           }
       }); 
-    return data;
+    return data.lista;
   }
 
   var getDataProgramas = function(){
@@ -623,11 +685,45 @@
           url : "getListaConectividad",
           type: "POST",
           dataType: "JSON",
+          data: {statusServicio: opcionConectividad},
           async: false,
+          beforeSend: function(){
+              $('#msjAlertI').html('Cargando información...');
+              modalAlertInfo.addClass("modal-info");
+              modalAlertInfo.modal('show');
+          },
           success: function(response) {
-            data = response;
-            $('#tConectividad').bootstrapTable('load', data);
-          }
+              data = response;
+              if(data){
+                modalAlertInfo.modal('hide');
+                if(data.bandera === 1){
+                  $('#btn_conConexion').addClass('btn-primary').removeClass('btn-default'); 
+                  $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
+                  $('#btn_con_sin_Conexion').addClass('btn-default').removeClass('btn-primary');
+                  $('#tConectividad').bootstrapTable('showColumn', 'programa');
+                  $('#tConectividad').bootstrapTable('showColumn', 'nombreProveedor');
+                }
+                if(data.bandera === 2){
+                  $('#btn_sinConexion').addClass('btn-primary').removeClass('btn-default'); 
+                  $('#btn_conConexion').addClass('btn-default').removeClass('btn-primary');
+                  $('#btn_con_sin_Conexion').addClass('btn-default').removeClass('btn-primary');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'programa');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'nombreProveedor');
+                }
+                if(data.bandera === 3){
+                  $('#btn_con_sin_Conexion').addClass('btn-primary').removeClass('btn-default'); 
+                  $('#btn_conConexion').addClass('btn-default').removeClass('btn-primary');
+                  $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'programa');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'nombreProveedor');
+                }
+                $('#tConectividad').bootstrapTable('load', data.lista);
+              }else{
+                modalAlertInfo.modal('hide');
+                $('#msjAlertD').html(data.msj);
+                modalAlertDanger.modal('show'); 
+              }               
+            }
       }); 
     return data;
   }
@@ -751,7 +847,7 @@
                 $('#statusConectividad').html("Conectado");
               }else{
                 $('#statusConectividad').addClass("btn btn-xs btn-danger");
-                $('#statusConectividad').html("Inactivo");
+                $('#statusConectividad').html("No Conectado");
               }
              // $('#statusConectividad').html(data.conectividad.statusServicio);
               $('#colonia').html(data.conectividad.colonia);
@@ -1347,7 +1443,6 @@
 
    var filtrarDatos = function(dataFiltro){
     data = [];
-
     var modalidadSeleccionadas = $('#CA_Modalidad').bootstrapTable('getSelections');
     var municipioSeleccionadas = $('#CA_RegionMunicipio').bootstrapTable('getSelections');
     var nivelEducSeleccionadas = $('#CA_NivelEducativo').bootstrapTable('getSelections');
@@ -1355,9 +1450,10 @@
     var nivelCTSeleccionadas = $('#CA_NivelCT').bootstrapTable('getSelections');
     var programaSeleccionadas = $('#CA_Programa').bootstrapTable('getSelections');
     var proveedorSeleccionadas = $('#CA_Proveedor').bootstrapTable('getSelections');
+    var localidadSeleccionadas = $('#CA_Localidad').bootstrapTable('getSelections');
 
     if(modalidadSeleccionadas.length > 0 || municipioSeleccionadas.length > 0 || nivelEducSeleccionadas.length > 0 || turnoSeleccionadas.length > 0 ||
-      nivelCTSeleccionadas.length > 0 || programaSeleccionadas.length > 0 || proveedorSeleccionadas.length > 0){
+      nivelCTSeleccionadas.length > 0 || programaSeleccionadas.length > 0 || proveedorSeleccionadas.length > 0 || localidadSeleccionadas.length > 0){
 
       $.ajax({
           url : 'filtrarDatos',
@@ -1370,14 +1466,16 @@
                  filtrosTurno: turnoSeleccionadas, 
                  filtrosNivelCT: nivelCTSeleccionadas, 
                  filtrosProgramas: programaSeleccionadas,
-                 filtrosProveedores: proveedorSeleccionadas},
+                 filtrosProveedores: proveedorSeleccionadas,
+                 opcionConectividad: opcionConectividad,
+                 filtrosLocalidad: localidadSeleccionadas},
           success: function(response) {
            data = response;
-           filtrosArray = data; 
+          // filtrosArray = data; 
+          console.log(data.programas);
            $('#tConectividad').bootstrapTable('load', data);
            $('#modal_filtros').modal('hide');
           // busquedaAnterior = busquedaActual;
-
           },
           error: function (jqXHR, textStatus, errorThrown)
             {
@@ -1390,57 +1488,6 @@
       $('#msjAlertD').html('Debe seleccionar por lo menos un filtro de busqueda');
       modalAlertDanger.modal('show'); 
     }
-
-    //var dataCTS = $('#tCTS').bootstrapTable('getSelections');
-    /*if(busquedaAnterior === 0){
-
-      $.ajax({
-        url : url,
-        type: "POST",
-        dataType: "JSON", 
-        async: false,
-        data: {dataFiltro: dataFiltro, filtrosArray: filtrosArray},
-        success: function(response) {
-         data = response;
-         dataFiltro = data; 
-         $('#tConectividad').bootstrapTable('load', data);
-         $('#modal_filtros').modal('hide');
-        // busquedaAnterior = busquedaActual;
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-          {
-              alert('Error deleting data');
-          }
-      });      
-    }
-    else{  
-      $.ajax({
-          url : url,
-          type: "POST",
-          dataType: "JSON", 
-          async: false,
-          data: {dataFiltro: dataFiltro, filtrosArray: filtrosArray},
-          success: function(response) {
-           data = response;
-           filtrosArray = data; 
-           $('#tConectividad').bootstrapTable('load', data);
-           $('#modal_filtros').modal('hide');
-          // busquedaAnterior = busquedaActual;
-
-          },
-          error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-      });   
-   // }
-   /* if(busquedaAnterior != busquedaActual){
-        numVeces ++;
-        if(busquedaActual === 1){
-          
-        }
-      
-    }  */
   }
 
   var getCatalogos = function(){
@@ -1460,7 +1507,7 @@
               $('#CA_NivelCT').bootstrapTable('load', data.nivelCT);
               $('#CA_Programa').bootstrapTable('load', data.programas);
               $('#CA_Proveedor').bootstrapTable('load', data.proveedores);
-
+              $('#CA_Localidad').bootstrapTable('load', data.localidad);
 
               $('#CA_Modalidad').hide();
               $('#CA_RegionMunicipio').hide();
@@ -1469,6 +1516,7 @@
               $('#CA_NivelCT').hide();
               $('#CA_Proveedor').hide();
               $('#CA_Programa').hide();
+              $('#CA_Localidad').hide();
 
               $('#btn_filtro_modalidad').addClass('btn-default').removeClass('btn-primary');
               $('#btn_filtro_municipio').addClass('btn-default').removeClass('btn-primary'); 
@@ -1477,6 +1525,16 @@
               $('#btn_filtro_turno').addClass('btn-default').removeClass('btn-primary');
               $('#btn_filtro_programa').addClass('btn-default').removeClass('btn-primary');
               $('#btn_filtro_proveedor').addClass('btn-default').removeClass('btn-primary'); 
+              $('#btn_filtro_localidad').addClass('btn-default').removeClass('btn-primary'); 
+
+              if(opcionConectividad == 1){
+                $('#btn_filtro_programa').show();
+                $('#btn_filtro_programa').show();
+              }
+              if(opcionConectividad == 2 || opcionConectividad == 3){
+                $('#btn_filtro_programa').hide();
+                $('#btn_filtro_proveedor').hide();
+              }
 
               $('#modal_filtros').modal('show');
             }
@@ -1492,6 +1550,7 @@
     var nivelCTSeleccionadas = $('#CA_NivelCT').bootstrapTable('getSelections');
     var programaSeleccionadas = $('#CA_Programa').bootstrapTable('getSelections');
     var proveedorSeleccionadas = $('#CA_Proveedor').bootstrapTable('getSelections');
+    var localidadSeleccionadas = $('#CA_Localidad').bootstrapTable('getSelections');
 
 
     if(modalidadSeleccionadas.length > 0)
@@ -1529,7 +1588,10 @@
     else 
       $('#btn_filtro_proveedor').addClass('btn-default').removeClass('btn-primary'); 
 
-    
+    if(localidadSeleccionadas.length > 0)
+      $('#btn_filtro_localidad').addClass('btn-primary').removeClass('btn-default');
+    else 
+      $('#btn_filtro_localidad').addClass('btn-default').removeClass('btn-primary'); 
 
   }
 
