@@ -2,9 +2,6 @@
 
 <?php $this->layout('main', ['title'=>'Conectividad'])?>
 <?php $this->start('extra_style')?>
-
-    <link href="<?php echo base_url('assets/css/multiselect.css')?>" rel="stylesheet">
-
 <?php $this->stop()?>
 <?php $this->start('page')?>
 
@@ -218,7 +215,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn_cerrar_ep">
+          <button type="button" class="close" aria-label="Close" id="btn_cerrar_modalPrograma">
             <span aria-hidden="true">&times;</span></button>
           <h4 id="pDetalle" class="modal-title">Detalle programa</h4>
           <h4 id="pEdicion" class="modal-title">Edición programa</h4>
@@ -300,7 +297,7 @@
           </form>    
         </div>
         <div class="modal-footer">
-          <input type="button" id="btn_cancelar_ep" value="Cancelar" class="btn btn-default pull-left" data-dismiss="modal">
+          <input type="button" id="btn_cancelar_modalPrograma" value="Cancelar" class="btn btn-default pull-left">
           <button type="button" id="edicionProgramaB" class="btn btn-success btn-sm">Guardar cambios</button>
         </div>
       </div>
@@ -311,10 +308,10 @@
   <!-- /.modal -->
 
   <div class="modal fade" id="modal_articulo">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" id="btn_close_Articulo" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" id="btn_close_Articulo" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
           <h4 id="aDetalle" class="modal-title">Detalle artículo</h4>
           <h4 id="aEdicion" class="modal-title">Edición artículo</h4>
@@ -363,7 +360,7 @@
             </div>
           </form>       
         <div class="modal-footer">
-           <input type="button" value="Cancelar" id="btn_cancelar_art" class="btn btn-default pull-left" data-dismiss="modal">
+           <input type="button" value="Cancelar" id="btn_cancelar_art" class="btn btn-default pull-left">
            <input type="button" value="Guardar Artículo" id="btnSaveArticulo" class="btn btn-success">
         </div>
       </div>

@@ -6,7 +6,7 @@
   var busquedaActual = 0;
   var busquedaAnterior = 0;
   var numVeces = 0;
-  
+  var filtros = false;
 
   $(document).ready(function(){
 
@@ -71,10 +71,11 @@
         {field: 'turno', title: 'Turno', sortable: true, align: 'center'},
         {field: 'municipio', title: 'Municipio', sortable: true, align: 'center'},
         {field: 'localidad', title: 'Localidad', sortable: true, align: 'center'}, 
-        {field: 'programa', title: 'Programa', sortable: true, align: 'center'}, 
-        {field: 'nombreProveedor', title: 'Proveedor', sortable: true, align: 'center'},
-        {field: 'programas', title: 'Programas', sortable: true, align: 'center'},       
-      /*  {field: 'statusServicio', title: 'Status', align: 'center', sortable: true, formatter: function(value, row, index){
+        {field: 'programas', title: 'Programas', sortable: true, align: 'center'}, 
+        {field: 'proveedores', title: 'Proveedores', sortable: true, align: 'center'},
+
+      /*  {field: 'programas', title: 'Programas', sortable: true, align: 'center'},       
+        {field: 'statusServicio', title: 'Status', align: 'center', sortable: true, formatter: function(value, row, index){
           string = value == 1 ? "<span class='btn btn-xs btn-success'>Conectividad</span>" : "<span class='btn btn-xs btn-warning'>Sin Conectividad</span>"
         return string;
         }} */
@@ -438,23 +439,25 @@
   });
 
   //EVENTO boton cancelar modal programa, limpia el contenido del modal
-  $('#btn_cancelar_ep').click(function(){
+  $('#btn_cancelar_modalPrograma').click(function(){
     $('#form_programa')[0].reset(); // reset form on modals
     $('#form_programa .form-group').removeClass('has-error'); // clear error class
     $('#form_programa .form-group .help-block').empty(); // clear error string
     getDataProgramas();
     window.idProgramaSeleccionado = null;
-    $('#proveedores').empty();
+   // $('#proveedores').empty();
+    $('#modal_programa').modal('hide');
    });
 
   //EVENTO boton cerrar modal programa, limpia el contenido del modal
-  $('#btn_cerrar_ep').click(function(){
+  $('#btn_cerrar_modalPrograma').click(function(){
     $('#form_programa')[0].reset(); // reset form on modals
     $('#form_programa .form-group').removeClass('has-error'); // clear error class
     $('#form_programa .form-group .help-block').empty(); // clear error string
     getDataProgramas();
     window.idProgramaSeleccionado = null;
-    $('#proveedores').empty();
+   // $('#proveedores').empty();
+    $('#modal_programa').modal('hide');
    });
 
   //EVENTO para mostrar modal de detalles de artículo
@@ -626,12 +629,16 @@
   
   //FUNCIÓN para limpiar elementos de modal de conectividad
   var limpiarElementosConectividad = function(){
-    window.idConectividadSeleccionado = null;
+   // window.idConectividadSeleccionado = null;
     $('#form_busqueda')[0].reset(); // reset form on modals
     $('#form_show')[0].reset(); // reset form on modals
     $('#form_show .form-group').removeClass('has-error'); // clear error class
     $('#form_show .form-group .help-block').empty(); // clear error string
-    recargarConectividad();
+    if(filtros == true){
+
+    }else{
+       recargarConectividad();
+    }
   }
 
   //JSON para obtener valores de la lista de conectividad
@@ -652,8 +659,8 @@
             $('#btn_conConexion').addClass('btn-primary').removeClass('btn-default'); 
             $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
             $('#btn_con_sin_Conexion').addClass('btn-default').removeClass('btn-primary');
-            $('#tConectividad').bootstrapTable('showColumn', 'programa');
-            $('#tConectividad').bootstrapTable('showColumn', 'proveedor');
+            $('#tConectividad').bootstrapTable('showColumn', 'programas');
+            $('#tConectividad').bootstrapTable('showColumn', 'proveedores');
 
             $('#tConectividad').bootstrapTable('showColumn', 'nombre_proveedor');
             modalAlertInfo.modal('hide');
@@ -700,22 +707,22 @@
                   $('#btn_conConexion').addClass('btn-primary').removeClass('btn-default'); 
                   $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
                   $('#btn_con_sin_Conexion').addClass('btn-default').removeClass('btn-primary');
-                  $('#tConectividad').bootstrapTable('showColumn', 'programa');
-                  $('#tConectividad').bootstrapTable('showColumn', 'nombreProveedor');
+                  $('#tConectividad').bootstrapTable('showColumn', 'programas');
+                  $('#tConectividad').bootstrapTable('showColumn', 'proveedores');
                 }
                 if(data.bandera === 2){
                   $('#btn_sinConexion').addClass('btn-primary').removeClass('btn-default'); 
                   $('#btn_conConexion').addClass('btn-default').removeClass('btn-primary');
                   $('#btn_con_sin_Conexion').addClass('btn-default').removeClass('btn-primary');
-                  $('#tConectividad').bootstrapTable('hideColumn', 'programa');
-                  $('#tConectividad').bootstrapTable('hideColumn', 'nombreProveedor');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'programas');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'proveedores');
                 }
                 if(data.bandera === 3){
                   $('#btn_con_sin_Conexion').addClass('btn-primary').removeClass('btn-default'); 
                   $('#btn_conConexion').addClass('btn-default').removeClass('btn-primary');
                   $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
-                  $('#tConectividad').bootstrapTable('hideColumn', 'programa');
-                  $('#tConectividad').bootstrapTable('hideColumn', 'nombreProveedor');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'programas');
+                  $('#tConectividad').bootstrapTable('hideColumn', 'proveedores');
                 }
                 $('#tConectividad').bootstrapTable('load', data.lista);
               }else{
@@ -974,7 +981,7 @@
                 $('#statusPrograma').addClass("btn btn-xs btn-danger");
                 $('#statusPrograma').html("Inactivo");
               }
-              $("#btn_cancelar_ep").attr("value","Cerrar");
+              $("#btn_cancelar_modalPrograma").attr("value","Cerrar");
               $('#gid').show();
               $('#vsatid').show();    
               $('#ipModem').show();
@@ -1360,6 +1367,7 @@
     $('#form_articulo .form-group .help-block').empty(); // 
     window.idProgramaSeleccionado = null;
     recargarArticulos();
+    $('#modal_articulo').modal('hide');
   } 
 
   //FUNCIONES PARA FILTROS DE BUSQUEDA
@@ -1387,61 +1395,7 @@
     }); 
   }
 
-
- /* var filtrarDatos = function(dataFiltro){
-    //Variable para saber el numero de filtros
-    data = [];
-    //var dataCTS = $('#tCTS').bootstrapTable('getSelections');
-    if(busquedaAnterior === 0){
-        $.ajax({
-          url : "filtrar",
-          type: "POST",
-          dataType: "JSON", 
-          async: false,
-          data: {dataFiltro: dataFiltro},
-          success: function(response) {
-           data = response;
-           filtrosArray = data; 
-           $('#tConectividad').bootstrapTable('load', data);
-           $('#modal_filtros').modal('hide');
-           busquedaAnterior = busquedaActual;
-          },
-          error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-        });      
-    }
-    if(busquedaAnterior === busquedaActual){
-      $.ajax({
-          url : "filtrar",
-          type: "POST",
-          dataType: "JSON", 
-          async: false,
-          data: {dataFiltro: dataFiltro},
-          success: function(response) {
-           data = response;
-           filtros = data; 
-           $('#tConectividad').bootstrapTable('load', data);
-           $('#modal_filtros').modal('hide');
-           busquedaAnterior = busquedaActual;
-
-
-          },
-          error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-      });   
-    }
-    if(busquedaAnterior != busquedaActual){
-
-        alert('Filtros::' + filtros);
-      
-    }
-  }  */
-
-   var filtrarDatos = function(dataFiltro){
+  var filtrarDatos = function(dataFiltro){
     data = [];
     var modalidadSeleccionadas = $('#CA_Modalidad').bootstrapTable('getSelections');
     var municipioSeleccionadas = $('#CA_RegionMunicipio').bootstrapTable('getSelections');
@@ -1470,11 +1424,11 @@
                  opcionConectividad: opcionConectividad,
                  filtrosLocalidad: localidadSeleccionadas},
           success: function(response) {
-           data = response;
-          // filtrosArray = data; 
-          console.log(data.programas);
-           $('#tConectividad').bootstrapTable('load', data);
-           $('#modal_filtros').modal('hide');
+            data = response;
+            filtros = true;
+            console.log(data.programas);
+            $('#tConectividad').bootstrapTable('load', data);
+            $('#modal_filtros').modal('hide');
           // busquedaAnterior = busquedaActual;
           },
           error: function (jqXHR, textStatus, errorThrown)

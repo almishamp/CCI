@@ -21,16 +21,48 @@ class Conectividad extends Main_Controller {
 		if($statusServicio == 1){
 			$data = $this->conectividad_model->getListConectividad();
 			$bandera = 1;
+
+			$dataFiltrado = array();
+			$arrayTemporalProgramas = array();
+			$arrayTemporalProveedores = array();
+
+			for($i=0; $i<count($data); $i++){
+			   if($i == 0){
+					array_push($arrayTemporalProgramas, $data[$i]['programa']);
+					$data[$i]['programas'] = $arrayTemporalProgramas;
+					$arrayTemporalProgramas = [];
+					array_push($arrayTemporalProveedores, $data[$i]['nombreProveedor']);
+					$data[$i]['proveedores'] = $arrayTemporalProveedores;
+					$arrayTemporalProveedores = [];
+					array_push($dataFiltrado, $data[$i]);
+				}else{
+					$posicion = $this->buscarCentro($dataFiltrado, $data[$i]['idConectividad']);
+					if($posicion >= 0){
+						array_push($dataFiltrado[$posicion]['programas'], $data[$i]['programa']);
+						array_push($dataFiltrado[$posicion]['proveedores'], $data[$i]['nombreProveedor']);
+					}
+					else{
+						array_push($arrayTemporalProgramas, $data[$i]['programa']);
+						$data[$i]['programas'] = $arrayTemporalProgramas;
+						$arrayTemporalProgramas = [];
+						array_push($arrayTemporalProveedores, $data[$i]['nombreProveedor']);
+						$data[$i]['proveedores'] = $arrayTemporalProveedores;
+						$arrayTemporalProveedores = [];
+						array_push($dataFiltrado, $data[$i]);
+					}
+				}  		   
+			}
+
 		}
 		if($statusServicio == 2){
-			$data = $this->conectividad_model->getListaSinConexion();
+			$dataFiltrado = $this->conectividad_model->getListaSinConexion();
 			$bandera = 2;
 		}
 		if($statusServicio == 3){
-			$data = $this->conectividad_model->getListaConSinConexion();
+			$dataFiltrado = $this->conectividad_model->getListaConSinConexion();
 		    $bandera = 3;
 		}
-		echo json_encode(array("bandera" => $bandera, "lista" => $data)); 
+		echo json_encode(array("bandera" => $bandera, "lista" => $dataFiltrado)); 
 	}
 
 	public function getListaProgramas(){
@@ -122,8 +154,6 @@ class Conectividad extends Main_Controller {
 		$data['programas'] = $this->catalogos_model->getListaCatalogoProgramas();
 		$data['proveedores'] = $this->catalogos_model->getListaCatalogoProveedores();
 		$data['localidad'] = $this->catalogos_model->getListaLocalidades();
-
-
 		echo json_encode($data);
 	}
 
@@ -200,18 +230,34 @@ class Conectividad extends Main_Controller {
 			$data = $this->conectividad_model->getListConectividadFiltros($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $idsProgramas, $idsProveedores, $localidades);
 
 			$dataFiltrado = array();
-			$arrayTemporal = array();
-			$idAnterior = 0;
-			foreach ($data as $centro) {
-				array_push($arrayTemporal, $centro['programa']);
-				if($idAnterior == $centro['idConectividad']){
+			$arrayTemporalProgramas = array();
+			$arrayTemporalProveedores = array();
+
+			for($i=0; $i<count($data); $i++){
+			   if($i == 0){
+					array_push($arrayTemporalProgramas, $data[$i]['programa']);
+					$data[$i]['programas'] = $arrayTemporalProgramas;
+					$arrayTemporalProgramas = [];
+					array_push($arrayTemporalProveedores, $data[$i]['nombreProveedor']);
+					$data[$i]['proveedores'] = $arrayTemporalProveedores;
+					$arrayTemporalProveedores = [];
+					array_push($dataFiltrado, $data[$i]);
 				}else{
-					$centro['programas'] = $arrayTemporal;
-					array_push($dataFiltrado, $centro);
-					//print_r(expression)
-					$arrayTemporal = [];
-				}
-				$idAnterior = $centro['idConectividad'];
+					$posicion = $this->buscarCentro($dataFiltrado, $data[$i]['idConectividad']);
+					if($posicion >= 0){
+						array_push($dataFiltrado[$posicion]['programas'], $data[$i]['programa']);
+						array_push($dataFiltrado[$posicion]['proveedores'], $data[$i]['nombreProveedor']);
+					}
+					else{
+						array_push($arrayTemporalProgramas, $data[$i]['programa']);
+						$data[$i]['programas'] = $arrayTemporalProgramas;
+						$arrayTemporalProgramas = [];
+						array_push($arrayTemporalProveedores, $data[$i]['nombreProveedor']);
+						$data[$i]['proveedores'] = $arrayTemporalProveedores;
+						$arrayTemporalProveedores = [];
+						array_push($dataFiltrado, $data[$i]);
+					}
+				}  		   
 			}
 		}
 
@@ -220,6 +266,18 @@ class Conectividad extends Main_Controller {
 		}
 		
 		echo json_encode($dataFiltrado);
+	}
+
+	function buscarCentro($dataFiltrado, $idCentro){
+		$posicion = -1;
+		for ($i=0; $i<count($dataFiltrado); $i++) {
+			if($dataFiltrado[$i]['idConectividad'] == $idCentro){
+				$posicion = $i;
+				break;
+			}
+		}
+
+		return $posicion;
 	}
 
 	public function getCatalogo(){

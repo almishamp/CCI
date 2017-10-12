@@ -243,18 +243,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="<?php echo base_url('conectividad/home')?>"><i class="fa fa-rss"></i> <span>Lista Conectividad</span></a></li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-rss"></i> <span>Conectividad</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url('conectividad/home')?>">Conectados</a></li>
-            <li><a href="<?php echo base_url('conectividad/noConectados')?>">No conectados</a></li>
-            <li><a href="<?php echo base_url('conectividad/listaCompleta/')?>">Con y sin conexión</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Catalogos</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -518,90 +506,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.modal-dialog >
   </div-->
 
-  <!--MODAL PROGRAMA-->
-  <div class="modal modal-default fade" id="modal_programa">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn_cerrar_ep">
-            <span aria-hidden="true">&times;</span></button>
-          <h4 id="pDetalle" class="modal-title">Detalle programa</h4>
-          <h4 id="pEdicion" class="modal-title">Edición programa</h4>
-          <h4 id="pNuevo" class="modal-title">Nuevo programa</h4>
-        </div>
-
-        <div class="modal-body"> 
-          <form action="#" id="form_programa" class="form-horizontal">
-            <div class="form-body">
-              <div class="form-group">
-                  <label class="control-label col-md-3">Programa: </label>
-                  <div class="col-md-3">
-                      <span class="help-block" id="programa"></span>
-                      <select id="programas" name="programas" class="form-control">
-                      </select>
-                  </div>
-                  <label class="control-label col-md-3">Tipo Programa: </label>
-                  <div class="col-md-3">
-                      <span class="help-block" id="tipoPrograma"></span>
-                      <select class="form-control xs" id="selectTipoPrograma" ip="status">
-                        <option value="1">Estatal</option>
-                        <option value="2">Federal</option>
-                      </select>
-                  </div>
-              </div>
-              <div class="form-group" id="div_gid_vsatid">
-                  <label class="control-label col-md-3">GID: </label>
-                  <div class="col-md-3" id="div_gid">
-                      <span class="help-block" id="gid"></span>
-                      <input class="input-number" type="text" name="gid" id="inputGid" size="6" placeholder="GID" maxlength="6">
-                  </div>
-                  <label class="control-label col-md-3">VSATID: </label>
-                  <div class="col-md-3" id="div_vsatid">
-                      <span class="help-block" id="vsatid"></span>
-                      <input type="text" name="vsatid" id="inputVsatid" size="6" placeholder="VSATID" maxlength="9">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="control-label col-md-3">Ip Modem: </label>
-                  <div class="col-md-3" id="div_ipModem">
-                      <span class="help-block" id="ipModem"></span>
-                      <input type="text" name="ipModem" id="inputIpModem" size="11" placeholder="IP Modem" maxlength="14">
-                  </div>
-                  <label class="control-label col-md-3">IP Telefonía: </label>
-                  <div class="col-md-3" id="div_ipTelefonia" >
-                      <span class="help-block" id="ipTelefonia"></span>
-                      <input type="text" name="ipTelefonia" id="inputIpTelefonia" size="11" placeholder="IP Telefonía" maxlength="14">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="control-label col-md-3">Status: </label>
-                  <div class="col-md-3" id="div_status">
-                    <span class="help-block" id="statusPrograma"></span>
-                      <select class="form-control xs" id="selectStatusP" ip="status">
-                        <option value="1">Activo</option>
-                        <option value="0">Inactivo</option>
-                      </select>
-                  </div>
-                  <label class="control-label col-md-3">Proveedor: </label>
-                  <div class="col-md-3">
-                    <span class="help-block" id="proveedor"></span>
-                    <select id="proveedores" name="proveedores" class="form-control"></select>                      
-                  </div>
-                  
-              </div>
-            </div>
-          </form>    
-        </div>
-        <div class="modal-footer">
-          <input type="button" id="btn_cancelar_ep" value="Cancelar" class="btn btn-default pull-left" data-dismiss="modal">
-          <button type="button" id="edicionProgramaB" class="btn btn-success btn-sm">Guardar cambios</button>
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+  
 
   <div class="modal fade" id="modal_articulo">
     <div class="modal-dialog modal-lg">
