@@ -71,8 +71,21 @@
         {field: 'turno', title: 'Turno', sortable: true, align: 'center'},
         {field: 'municipio', title: 'Municipio', sortable: true, align: 'center'},
         {field: 'localidad', title: 'Localidad', sortable: true, align: 'center'}, 
-        {field: 'programas', title: 'Programas', sortable: true, align: 'center'}, 
-        {field: 'proveedores', title: 'Proveedores', sortable: true, align: 'center'},
+        {field: 'colonia', title: 'Colonia', sortable: true, align: 'center', visible: false}, 
+        {field: 'programas', title: 'Programas', sortable: true, align: 'height', formatter: function (value, row, index) {
+                string = '';
+                $.each( value, function( key, value ) {
+                    string += '<li style = "font-size:12px">'+value+'</li>';
+                }); 
+                return string;                 
+        }},
+        {field: 'proveedores', title: 'proveedores', sortable: true, align: 'height', formatter: function (value, row, index) {
+                string = '';
+                $.each( value, function( key, value ) {
+                    string += '<li style = "font-size:12px">'+value+'</li>';
+                }); 
+                return string;                 
+        }}        
 
       /*  {field: 'programas', title: 'Programas', sortable: true, align: 'center'},       
         {field: 'statusServicio', title: 'Status', align: 'center', sortable: true, formatter: function(value, row, index){
@@ -99,8 +112,6 @@
       toolbar: '#toolbarP',
       iconSize: 'btn-sm',
       clickToSelect: true,
-      //showRefresh: true,
-      //showFooter: true,
       columns: [
         {radio: true},
         {field: 'idPrograma', title: '', visible: false},
@@ -117,7 +128,6 @@
       ],
       onClickRow: function(row, $element, field){
         window.idProgramaSeleccionado = row.idPrograma;
-        window.idCatProveedorSeleccionado = row.idCatProveedor;
       } 
 
     });
@@ -367,7 +377,12 @@
   });
 
   $('#btnBuscarConectividad').click(function(){
-    buscarCentro();
+    if($('#claveCT_buscar').val()){
+      buscarCentro();
+    }else{
+      $('#msjAlertD').html("Agregue la clave del centro");
+      modalAlertDanger.modal('show'); 
+    }
   });
 
   //EVENTOS para mostrar las listas de conectividad con los distintos estatus de conexión
@@ -522,7 +537,6 @@
 
 
  $('#btn_modal_filtros_municipio').click(function(){
-  alert('entra');
     getCatalogo('CA_RegionMunicipio');
   });
 
@@ -849,11 +863,11 @@
               $("#tBusquedaConect").hide();
               $('#claveCT').html(data.conectividad.claveCT);
               $('#nombreCT').html(data.conectividad.nombreCT);
-              if(data.conectividad.statusServicio == 1){
-                $('#statusConectividad').addClass("btn btn-xs btn-success");
+              if(data.conectividad.statusServicio === 1){
+                $('#statusConectividad').addClass("btn-success").removeClass('btn-danger');
                 $('#statusConectividad').html("Conectado");
               }else{
-                $('#statusConectividad').addClass("btn btn-xs btn-danger");
+                $('#statusConectividad').addClass("btn-danger").removeClass('btn-success');
                 $('#statusConectividad').html("No Conectado");
               }
              // $('#statusConectividad').html(data.conectividad.statusServicio);
@@ -877,15 +891,20 @@
                 $('#div_rinventario').hide();
                 $('#div_rsitio').hide();
                 $("#tDetalle").hide();
+                $('#input_telContacto').show();
+                $('#telefonoContacto').hide();
               }else{
                 $('#respSitio').html(data.conectividad.nombreRespSitio);
                 $('#respInventario').html(data.conectividad.nombreRespInventario);
+                $('#telefonoContacto').html(data.conectividad.telefonoContacto);
                 $('#div_rinventario').show();
                 $('#div_rsitio').show();
                 $("#tDetalle").show();
                 $('#divInventario').hide();
                 $('#divSitio').hide();
                 $('#tEdicion').hide();
+                $('#input_telContacto').hide();
+
                 $('#saveConectividadB').hide();
               }
               $('#tProgramas').bootstrapTable('load', data.programas);
@@ -939,7 +958,7 @@
                                        .appendTo($('select#select_proveedores'));
               }
               $('#select_proveedores').val(data.programa.idCatProveedor);
-              if(data.programa.tipoprograma === 'FEDERAL'){
+              if(data.programa.tipoprograma == 'FEDERAL'){
                 $('#gid_input').val(data.programa.gid);
                 $('#vsatid_input').val(data.programa.vsatid);
                 $('#selectStatusP').val(data.programa.status);
@@ -947,10 +966,9 @@
                 $('#vsatid_input').show();
                 $('#ipTelefonia_input').show();
                 $('#ipModem_input').show();
-
+                $('#div_gid_vsatid').show();
               }else{
-                $('#ipModem_input').hide();
-                $('#ipTelefonia_input').hide();
+                $('#div_gid_vsatid').hide();
               }
 
               $('#selectStatusP').show();
@@ -966,6 +984,7 @@
               $('#proveedor').hide();
               $('#pDetalle').hide();
               $('#pEdicion').show();
+              $('#edicionProgramaB').show();
               $('#pNuevo').hide();
             }else{
               $('#gid').html(data.programa.gid);
@@ -981,6 +1000,12 @@
                 $('#statusPrograma').addClass("btn btn-xs btn-danger");
                 $('#statusPrograma').html("Inactivo");
               }
+              if(data.programa.tipoprograma == 'FEDERAL')
+                $('#div_gid_vsatid').show();
+              else
+                $('#div_gid_vsatid').hide();
+
+
               $("#btn_cancelar_modalPrograma").attr("value","Cerrar");
               $('#gid').show();
               $('#vsatid').show();    
@@ -1085,6 +1110,7 @@
       var idConectividadS = window.idConectividadSeleccionado;
       var valoresForm = "&respSitio=" + $('#rsitio').val() + 
                         "&respInventario=" + $('#rinventario').val() +
+                        "&telefonoContacto=" + $('#input_telContacto') +
                         "&idConectividad=" + idConectividadS;
       $.ajax({
             url : "editar",
@@ -1116,8 +1142,6 @@
   var guardarPrograma = function(){
      data = [];
       var idProgramaS = window.idProgramaSeleccionado;
-      alert($('#idCatPrograma').html() + ' :::::');
-
       if(idProgramaS){
         var metodo = '../programa/edicion';
         var idCatPrograma = $('#idCatPrograma').html();
@@ -1450,6 +1474,7 @@
           type: "POST",
           dataType: "JSON",
           async: false,
+          data: {opcionConectividad: opcionConectividad},
           success: function(response) {
             data = response;
 

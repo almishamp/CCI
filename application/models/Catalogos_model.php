@@ -125,10 +125,22 @@ class Catalogos_model extends CI_Model{
 		$this->db->distinct();
 		$this->db->select('localidad');
 		$query = $this->db->get('conectividad');
+		return $query->result_array();
+	}
 
+	function getListaLocalidadesConectados(){
+		$this->db->distinct();
+		$this->db->select('localidad');
+		$query = $this->db->get_where('conectividad', array('statusServicio' => 1));
 		return $query->result_array();
 	}
 	
+	function getListaLocalidadesNoConectados(){
+		$this->db->distinct();
+		$this->db->select('localidad');
+		$query = $this->db->get_where('conectividad', array('statusServicio' => 0));
+		return $query->result_array();
+	}
 	
 
 }

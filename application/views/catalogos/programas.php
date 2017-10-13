@@ -92,7 +92,7 @@
                   <label class="control-label col-md-3">Status: </label>
                   <div class="col-md-3">
                       <span class="help-block" id="statusCP"></span>
-                      <select class="form-control xs" id="select_statusCP" ip="select_statusCP">
+                      <select class="form-control xs" id="select_statusCP">
                           <option value="1">Activo</option>
                           <option value="0">Inactivo</option>
                       </select>

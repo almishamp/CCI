@@ -33,7 +33,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -243,14 +242,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="<?php echo base_url('conectividad/home')?>"><i class="fa fa-rss"></i> <span>Lista Conectividad</span></a></li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Catalogos</span>
+          <a href="#"><i class="fa fa-book"></i> <span>Catalogos</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?php echo base_url('catalogos/listProgramas/')?>">Programas</a></li>
-            <li><a href="<?php echo base_url('catalogos/listProveedores/')?>">Proveedores</a></li>
+            <li><a href="<?php echo base_url('catalogos/listProgramas/')?>"><i class="fa fa-rss-square"></i>Programas</a></li>
+            <li><a href="<?php echo base_url('catalogos/listProveedores/')?>"><i class="fa fa-rss-square"></i>Proveedores</a></li>
           </ul>
         </li>
       </ul>
@@ -647,7 +646,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="modal-footer">
           <div class="col-md-4"></div>
           <div class="col-md-4">
-                <button type="button" class="btn btn-outline pull-left btn-xm" data-dismiss="modal">Cerrar</button>
+                <!--button type="button" class="btn btn-outline pull-left btn-xm" data-dismiss="modal">Cerrar</button-->
           </div>
           <div class="col-md-4"></div>
         </div>

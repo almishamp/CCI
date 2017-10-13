@@ -112,7 +112,8 @@ class Conectividad extends Main_Controller {
                 'longitud' => $_POST['longitud'],
                 'localidad' => $_POST['localidad'],
                 'nombreRespSitio' => $_POST['respSitio'],
-                'nombreRespInventario' => $_POST['respInventario']
+                'nombreRespInventario' => $_POST['respInventario'],
+                'telefonoContacto' => $_POST['telefonoContacto']
             );
         echo json_encode(array("status" => TRUE, "arreglo" => $data)); 
 	}
@@ -146,6 +147,16 @@ class Conectividad extends Main_Controller {
 	}
 
 	public function getCatalogos(){
+		if($_POST['opcionConectividad'] == 1){
+			$data['localidad'] = $this->catalogos_model->getListaLocalidadesConectados();
+		}
+		if($_POST['opcionConectividad'] == 2){
+			$data['localidad'] = $this->catalogos_model->getListaLocalidadesNoConectados();
+		}
+		if($_POST['opcionConectividad'] == 3){
+			$data['localidad'] = $this->catalogos_model->getListaLocalidades();
+		}
+
 		$data['municipios'] = $this->catalogos_model->getListaMunicipios();
 		$data['modalidad'] = $this->catalogos_model->getListaModalidad();
 		$data['nivelEducativo'] = $this->catalogos_model->getListaNivelEducativo();
@@ -153,7 +164,6 @@ class Conectividad extends Main_Controller {
 		$data['nivelCT'] = $this->catalogos_model->getListaNivelCT();
 		$data['programas'] = $this->catalogos_model->getListaCatalogoProgramas();
 		$data['proveedores'] = $this->catalogos_model->getListaCatalogoProveedores();
-		$data['localidad'] = $this->catalogos_model->getListaLocalidades();
 		echo json_encode($data);
 	}
 
@@ -262,7 +272,7 @@ class Conectividad extends Main_Controller {
 		}
 
 		if($opcionConectividad == 2 || $opcionConectividad == 3){
-			$data = $this->conectividad_model->getListConectividadFiltrosConSinConexion($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $opcionConectividad, $localidades);
+			$dataFiltrado = $this->conectividad_model->getListConectividadFiltrosConSinConexion($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $opcionConectividad, $localidades);
 		}
 		
 		echo json_encode($dataFiltrado);

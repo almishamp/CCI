@@ -100,7 +100,7 @@
                     </div>
                     <label class="control-label col-md-3">Status: </label>
                     <div class="col-md-3">
-                        <span class="help-block" id="statusConectividad"></span>
+                        <span class="help-block btn btn-xs" id="statusConectividad"></span>
                     </div>
                 </div>
 
@@ -168,6 +168,14 @@
                     </div>
                     <div class="col-md-6" id="divInventario">
                         <input class="mayusculas" type="text" name="rinventario" id="rinventario" size="50" placeholder="Nombre Responsable Inventario">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Teléfono de contacto:</label>
+                    <span class="help-block" id="telefonoContacto"></span>
+                    <div class="col-md-6">
+                        <input class="mayusculas" type="text" name="input_telContacto" id="input_telContacto" size="50" maxlength="10" placeholder="Teléfono de contacto"  onKeyPress="return soloNumeros(event)">
+                        <span class="help-block"></span>
                     </div>
                     <div class="col-md-3" id="saveConectividadB">
                         <input type="button" value="Editar" ="" id="edicionConectividadB" class="btn btn-success">

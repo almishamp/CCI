@@ -10,7 +10,7 @@ class Conectividad_model extends CI_Model{
 
 	function getListConectividad(){
 
-		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, p.status as status, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
+		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, colonia, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, p.status as status, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
 		$this->db->from('conectividad as c');
 		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
 		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');
@@ -119,7 +119,7 @@ class Conectividad_model extends CI_Model{
 
 	function getListConectividadFiltros($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $idsProgramas, $idsProveedores, $localidades){
 
-		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, p.status as status, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
+		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, colonia, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, p.status as status, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma, cpv.idCatProveedor as idCatProveedor, cpv.nombre as nombreProveedor');    
 		$this->db->from('conectividad as c');
 		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
 		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');
@@ -165,7 +165,7 @@ class Conectividad_model extends CI_Model{
 
 	function getListConectividadFiltrosConSinConexion($idsModalidad, $idsMunicipio, $idsNivelEducativo, $idsNivelCT, $idsTurno, $opcionConectividad, $localidades){
 
-		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT');    
+		$this->db->select('c.idConectividad, claveCT, nombreCT, statusServicio, m.idModalidad as idModalidad, m.nombre as modalidad, rm.idMunicipio as idMunicipio, rm.nombreMunicipio as municipio, localidad, colonia, ne.idNivelEducativo as idNivelEducativo, ne.nombre as nivelEducativo, t.idTurno as idTurno, t.nombre as turno, nct.idNivelCT as idNivelCT, nct.nombre as nivelCT');    
 		$this->db->from('conectividad as c');
 		$this->db->join('CA_RegionMunicipio as rm', 'rm.idMunicipio = c.idMunicipio');
 		$this->db->join('CA_Modalidad as m', 'm.idModalidad = c.idModalidad');

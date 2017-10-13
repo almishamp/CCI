@@ -152,6 +152,7 @@
               $('#CPNuevo').hide();
               $('#CPDetalle').hide();
               $('#CPEdicion').show();
+              $('#select_statusCP').show();
             }else{
               $('#nombreCP').html(data.nombre);
               if(data.status === 1){
