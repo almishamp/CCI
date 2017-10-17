@@ -160,7 +160,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <!-- The user image in the navbar-->
               <img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span id="userNameSpan1" class="hidden-xs"></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -168,12 +168,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <span id="userNameSpan1" class="hidden-xs"></span>
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+              <!--li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -185,7 +184,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a href="#">Friends</a>
                   </div>
                 </div>
-                <!-- /.row -->
+                <!-- /.row>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
@@ -193,7 +192,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <input type="button" value="Cerrar session" id="btnCerrarSession" class="btn btn-default">
                 </div>
               </li>
             </ul>
@@ -218,7 +217,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p><span id="userNameSpan2" class="hidden-xs"></span></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -270,11 +269,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
-    <div class="pull-right hidden-xs">
+    <!--div class="pull-right hidden-xs">
       Anything you want
-    </div>
+    </div-->
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2017 <a href="#">Usebeq</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -288,23 +287,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="tab-content">
       <!-- Home tab content -->
       <div class="tab-pane active" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <h3 class="control-sidebar-heading">Información de usuario</h3>
         <ul class="control-sidebar-menu">
           <li>
             <a href="javascript:;">
               <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
               <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                <!--h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
 
-                <p>Will be 23 on April 24th</p>
+                <p>Will be 23 on April 24th</p-->
               </div>
             </a>
           </li>
         </ul>
         <!-- /.control-sidebar-menu -->
 
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <!--h3 class="control-sidebar-heading">Tasks Progress</h3>
         <ul class="control-sidebar-menu">
           <li>
             <a href="javascript:;">
@@ -507,7 +506,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   
 
-  <div class="modal fade" id="modal_articulo">
+  <!--div class="modal fade" id="modal_articulo">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -564,9 +563,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <input type="button" value="Guardar Artículo" id="btnSaveArticulo" class="btn btn-success">
         </div>
       </div>
-      <!-- /.modal-content -->
+      <!-- /.modal-content >
     </div>
-    <!-- /.modal-dialog -->
+    <!-- /.modal-dialog >
   </div>  
 
       <!--MODAL filtros-->

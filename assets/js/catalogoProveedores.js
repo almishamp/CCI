@@ -123,10 +123,12 @@
           async: false,
           success: function(response) {
             data = response;
-            $('#tCatProveedores').bootstrapTable('load', data);
+            $('#tCatProveedores').bootstrapTable('load', data.proveedores);
+            $('#userNameSpan1').html(data.user.nombreUsuario);
+            $('#userNameSpan2').html(data.user.nombreUsuario);
           }
       }); 
-    return data;
+    return data.proveedores;
   }
 
 
@@ -223,7 +225,6 @@
                         "&nombreContacto=" + $('#nombreContacto_input').val() + 
                         "&telefonoContacto=" + $('#telefonoContacto_input').val() + 
                         "&idCatProveedor=" + idCatProveedorS;
-                        alert(valoresForm);
       $.ajax({
           url : metodo,
           type: "POST",
@@ -236,7 +237,6 @@
           },
           success: function(response) {
             data = response;
-            alert(data);
             if(data.status === 1){
               modalAlertInfo.modal('hide');
               $('#modal_CProveedores').modal('hide');

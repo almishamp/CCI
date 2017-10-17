@@ -13,7 +13,11 @@ class Conectividad extends Main_Controller {
 	}
 	
 	public function home(){
-		echo $this->templates->render('conectividad/index');
+		if ($this->session->userdata() && $this->session->userdata('logueado') == true) {
+			echo $this->templates->render('conectividad/index');
+		} else{
+			echo $this->templates->render('usuario/login');
+		}
 	}
 
 	public function getListaConectividad(){
@@ -62,7 +66,9 @@ class Conectividad extends Main_Controller {
 			$dataFiltrado = $this->conectividad_model->getListaConSinConexion();
 		    $bandera = 3;
 		}
-		echo json_encode(array("bandera" => $bandera, "lista" => $dataFiltrado)); 
+
+		$user = $this->session->userdata();
+		echo json_encode(array("bandera" => $bandera, "lista" => $dataFiltrado, "user" => $user)); 
 	}
 
 	public function getListaProgramas(){

@@ -12,6 +12,8 @@
   $('#div_contraseniaRepeat').hide();
   $('#p_registrar').hide();
   $('#p_logear').show();
+  $('#btn_registrarse').show();
+  $('#btn_guardarRegistro').hide();
 
 
   $(document).ready(function() {
@@ -27,13 +29,13 @@
       show: false
     });
 
-    modalAlertSuccess = $('#modalAlertSuccess').modal({
+    modalAlertSuccess = $('#modalAlertSuccessUser').modal({
       backdrop: 'static',
       keyboard: false,
       show: false
     });
 
-    modalAlertInfo = $('#modalAlertInfo').modal({
+    modalAlertInfo = $('#modalAlertDangerUser').modal({
       backdrop: 'static',
       keyboard: false,
       show: false
@@ -43,8 +45,13 @@
 
   //EVENTO para mostrar pantalla de password olvidada
   $('#btn_acceder').click(function(){
-   // alert('asd');
+   logeo = true;
    logearse();
+  });
+ //Evento para agregar un nuevo usuario
+  $('#btn_guardarRegistro').click(function(){
+   // alert('asd');
+   nuevoUsuario();
   });
 
   $('#btn_registrarse').click(function(){
@@ -52,50 +59,45 @@
   	$('#div_contraseniaRepeat').show();
   	$('#p_registrar').show();
   	$('#p_logear').hide();
+  	$('#btn_logearse').hide();
+  	$('#btn_registrarse').hide();
+  	$('#btn_guardarRegistro').show();
+  	$('#btn_acceder').hide();
     logeo = false;
 
   });
 
   var logearse = function(){
   	data = [];
-  	if(logeo == true){
-  		var url = "usuario/acceder";
-  	}else{
-  		var url = "usuario/nuevoRegistro";
-  	}
+  	alert($('#email').val());
   	var valoresForm = "&nombreUsuario=" + $('#nombreUsuario').val() +
                       "&email=" + $('#email').val() +
                       "&contrasenia=" + $('#contrasenia').val() +
                       "&contraseniaRepeat=" + $('#contraseniaRepeat').val();
     $.ajax({
-          url : url,
+          url : "usuario/acceder",
           type: "POST",
           dataType: "JSON",
           async: false,
-          data: {valoresForm},
+          data: valoresForm,
           beforeSend: function(){
-            $('#msjAlertI').html('Actualizando, espere por favor...');
+            $('#msjAlertIU').html('Actualizando, espere por favor...');
              modalAlertInfo.modal('show');
           },
           success: function(response) {
             data = response;
-            alert(data.redirect);
-           // console.log(data);
-           // $('#tProgramas').bootstrapTable('load', data);
-                          document.location.href = data.redirect;
-
-           if(data.status === true){
-            }
-            if(data.status === 2){
-                
-            }
-            if(data.status === 3){
+           	if(data.status == 1){
+           		document.location.href = data.redirect;
+            }if(data.status == 2){
             	modalAlertInfo.modal('hide');
                 for (var i = 0; i < data.data.inputerror.length; i++) {
                     $('[name="'+data.data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
                     $('[name="'+data.data.inputerror[i]+'"]').next().text(data.data.error_string[i]); //select span help-block class set text error string
                 } 
-                $('#msjAlertD').html('¡Por favor verifique el valor de los campos!');
+                $('#msjAlertU').html('¡Por favor verifique el valor de los campos!');
+                modalAlertDanger.modal('show');
+            }if(data.status == 3){
+            	$('#msjAlertDU').html(data.msj);
                 modalAlertDanger.modal('show');
             }
           }, error: function (jqXHR, textStatus, errorThrown)
@@ -104,4 +106,60 @@
             }
       }); 
     //return data;
+  }
+
+  var nuevoUsuario = function(){
+  	data = [];
+  	alert($('#email').val());
+  	var valoresForm = "&nombreUsuario=" + $('#nombreUsuario').val() +
+                      "&email=" + $('#email').val() +
+                      "&contrasenia=" + $('#contrasenia').val() +
+                      "&contraseniaRepeat=" + $('#contraseniaRepeat').val();
+    $.ajax({
+          url : "usuario/nuevoRegistro",
+          type: "POST",
+          dataType: "JSON",
+          async: false,
+          data: valoresForm,
+          beforeSend: function(){
+            $('#msjAlertIU').html('Actualizando, espere por favor...');
+             modalAlertInfo.modal('show');
+          },
+          success: function(response) {
+            data = response;
+           	if(data.status == 1){
+           		modalAlertInfo.modal('hide');
+           		$('#msjAlertSU').html(data.msj);
+           		limpiarFormUser();
+                modalAlertSuccess.modal('show');
+            }if(data.status == 2){
+            	modalAlertInfo.modal('hide');
+                for (var i = 0; i < data.data.inputerror.length; i++) {
+                    $('[name="'+data.data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                    $('[name="'+data.data.inputerror[i]+'"]').next().text(data.data.error_string[i]); //select span help-block class set text error string
+                } 
+                $('#msjAlertU').html('¡Por favor verifique el valor de los campos!');
+                modalAlertDanger.modal('show');
+            }if(data.status == 3){
+            	$('#msjAlertDU').html(data.msj);
+                modalAlertDanger.modal('show');
+            }
+          }, error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+      }); 
+    //return data;
+  }
+
+  var limpiarFormUser = function(){
+  	$('#form_login')[0].reset(); // reset form on modals
+    $('#form_login .form-group').removeClass('has-error'); // clear error class
+    $('#form_login .form-group .help-block').empty(); // clear error string
+    $('#div_nombreUsuario').hide();
+	$('#div_contraseniaRepeat').hide();
+	$('#p_registrar').hide();
+	$('#p_logear').show();
+	$('#btn_registrarse').show();
+	$('#btn_guardarRegistro').hide();
   }

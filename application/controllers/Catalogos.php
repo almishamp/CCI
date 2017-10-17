@@ -13,11 +13,19 @@ class Catalogos extends Main_Controller{
 	}
 
 	public function listProgramas(){
-		echo $this->templates->render('catalogos/programas');
+		if ($this->session->userdata() && $this->session->userdata('logueado') == true) {
+			echo $this->templates->render('catalogos/programas');
+		} else{
+			echo $this->templates->render('usuario/login');
+		}
 	}
 
 	public function listProveedores(){
-		echo $this->templates->render('catalogos/proveedores');
+		if ($this->session->userdata() && $this->session->userdata('logueado') == true) {
+			echo $this->templates->render('catalogos/proveedores');
+		} else{
+			echo $this->templates->render('usuario/login');
+		}
 	}
 
 	public function showPrograma(){
@@ -31,11 +39,15 @@ class Catalogos extends Main_Controller{
 	}
 
 	public function getListProgramas(){
-		echo json_encode($this->catalogos_model->getListaCatalogoProgramas());
+		$programas = $this->catalogos_model->getListaCatalogoProgramas();
+	    $user = $this->session->userdata();
+		echo json_encode(array("programas" => $programas, "user" => $user)); 
 	}
 
 	public function getListProveedores(){
-		echo json_encode($this->catalogos_model->getListaCatalogoProveedores());
+		$proveedores = $this->catalogos_model->getListaCatalogoProveedores();
+	    $user = $this->session->userdata();
+		echo json_encode(array("proveedores" => $proveedores, "user" => $user)); 
 	}
 
 	public function getProvedorCAT(){

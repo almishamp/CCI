@@ -545,6 +545,10 @@
     getCatalogos();
   });
 
+ $('#btnCerrarSession').click(function(){
+   cerrarSession();
+ });
+
  //EVENTOS FILTROS
  $('#btn_filtro_nivelEduc').click(function(){
     $('#CA_Modalidad').hide();
@@ -648,9 +652,7 @@
     $('#form_show')[0].reset(); // reset form on modals
     $('#form_show .form-group').removeClass('has-error'); // clear error class
     $('#form_show .form-group .help-block').empty(); // clear error string
-    if(filtros == true){
-
-    }else{
+    if(filtros != true){
        recargarConectividad();
     }
   }
@@ -670,11 +672,15 @@
           },
           success: function(response) {
             data = response;
+
             $('#btn_conConexion').addClass('btn-primary').removeClass('btn-default'); 
             $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
             $('#btn_con_sin_Conexion').addClass('btn-default').removeClass('btn-primary');
             $('#tConectividad').bootstrapTable('showColumn', 'programas');
             $('#tConectividad').bootstrapTable('showColumn', 'proveedores');
+            $('#userNameSpan1').html(data.user.nombreUsuario);
+            $('#userNameSpan2').html(data.user.nombreUsuario);
+
 
             $('#tConectividad').bootstrapTable('showColumn', 'nombre_proveedor');
             modalAlertInfo.modal('hide');
@@ -1572,6 +1578,28 @@
     else 
       $('#btn_filtro_localidad').addClass('btn-default').removeClass('btn-primary'); 
 
+  }
+
+  var cerrarSession = function(){
+    $.ajax({
+          url : "../usuario/salir",
+          type: "POST",
+          dataType: "JSON",
+          async: false,
+          beforeSend: function(){
+            $('#msjAlertI').html('Actualizando, espere por favor...');
+             modalAlertInfo.modal('show');
+          },
+          success: function(response) {
+            data = response;
+            modalAlertInfo.modal('hide');
+            document.location.href = data.redirect;
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+              alert('Error deleting data');
+          }
+      }); 
   }
 
 

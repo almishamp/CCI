@@ -1,10 +1,20 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class usuario_model extends CI_Model{
+class Usuario_model extends CI_Model{
 	# Constructor del modelo
-	function construct(){
-		parent::__construct();
+	public function __construct(){
+		$this->load->database('db1');
+	}
+
+	public function obtenerUsuario($email, $contrasenia){
+		$query = $this->db->get_where('conectividadUsers', array('email' => $email, 'contrasenia' => $contrasenia));
+		return $query->row_array();
+	}
+
+	public function saveUsuario($data){
+		$this->db->insert('conectividadUsers', $data);
+	    return $this->db->insert_id();
 	}
 
 /*	public function altaUsuario($nombreUsuario, $contrasenia, $email, $contraseniaRepeat) {

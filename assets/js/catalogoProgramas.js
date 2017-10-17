@@ -16,6 +16,7 @@
         $(this).next().empty();
     });
 
+
     $("#form_proveedor").hide();
 
     modalAlertDanger = $('#modalAlertDanger').modal({
@@ -118,10 +119,12 @@
           async: false,
           success: function(response) {
             data = response;
-            $('#tCatProgramas').bootstrapTable('load', data);
+            $('#tCatProgramas').bootstrapTable('load', data.programas);
+            $('#userNameSpan1').html(data.user.nombreUsuario);
+            $('#userNameSpan2').html(data.user.nombreUsuario);
           }
       }); 
-    return data;
+    return data.programas;
   }
 
 
@@ -204,7 +207,6 @@
       var valoresForm = "&nombre=" + $('#nombrecp_input').val() + 
                         "&status=" + $('#select_statusCP').val() + 
                         "&idCatPrograma=" + idCatProgramaS;
-                        alert(valoresForm);
       $.ajax({
           url : metodo,
           type: "POST",
@@ -248,6 +250,5 @@
     window.idCatProgramaSeleccionado = null;
     recargarCProgramas();
   }
-
 
 
