@@ -95,7 +95,10 @@
       ],
       onClickRow: function(row, $element, field){
         window.idConectividadSeleccionado = row.idConectividad;
-      }
+      },
+      onCheck: function(row, $element, field){
+        window.idConectividadSeleccionado = row.idConectividad;
+      }, 
 
     });
 
@@ -545,9 +548,9 @@
     getCatalogos();
   });
 
- $('#btnCerrarSession').click(function(){
-   cerrarSession();
- });
+ $('#exportButton').click(function(){
+   exportarExcel();
+ });  
 
  //EVENTOS FILTROS
  $('#btn_filtro_nivelEduc').click(function(){
@@ -1457,6 +1460,7 @@
             data = response;
             filtros = true;
             console.log(data.programas);
+            "<?php $data = data;?>"
             $('#tConectividad').bootstrapTable('load', data);
             $('#modal_filtros').modal('hide');
           // busquedaAnterior = busquedaActual;
@@ -1580,11 +1584,14 @@
 
   }
 
-  var cerrarSession = function(){
+  var exportarExcel = function(){
+    var dataInfo = $('#tConectividad').bootstrapTable('getData');
+    alert(dataInfo);
     $.ajax({
-          url : "../usuario/salir",
+          url : "exportarExcel",
           type: "POST",
           dataType: "JSON",
+          data: {dataInfo: dataInfo},
           async: false,
           beforeSend: function(){
             $('#msjAlertI').html('Actualizando, espere por favor...');
@@ -1592,15 +1599,14 @@
           },
           success: function(response) {
             data = response;
-            modalAlertInfo.modal('hide');
-            document.location.href = data.redirect;
+            alert(data);
           },
           error: function (jqXHR, textStatus, errorThrown)
           {
               alert('Error deleting data');
           }
       }); 
-  }
+  } 
 
 
 

@@ -192,7 +192,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <input type="button" value="Cerrar session" id="btnCerrarSession" class="btn btn-default">
+                  <form method="POST" action="<?php echo base_url('usuario/salir') ?>">
+                    <input type="submit" value="Cerrar session" id="btnCerrarSession" class="btn btn-default">
+                  </form>
                 </div>
               </li>
             </ul>

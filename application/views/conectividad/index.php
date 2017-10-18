@@ -8,6 +8,12 @@
 <div id="toolbar">
     <button type="button" class="btn btn-primary" id="btnMostrar">Detalles</button>
     <button type="button" class="btn btn-primary" id="btnEditar">Editar</button>
+    <!--button id="exportButton" class="btn btn-danger clearfix"><span class="fa fa-file-excel-o"></span> Exportar a Excel</button-->
+    <form method="POST" action="<?php echo base_url('conectividad/exportarExcel') ?>">
+      <input type='hidden' name='oculto_array' value='<?php echo serialize($data)?>' />
+
+        <input type="submit" value="Generar excel" class="btn btn-danger">
+    </form>
 </div>
 
 <section class="content-header">

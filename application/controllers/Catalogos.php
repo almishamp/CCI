@@ -16,7 +16,7 @@ class Catalogos extends Main_Controller{
 		if ($this->session->userdata() && $this->session->userdata('logueado') == true) {
 			echo $this->templates->render('catalogos/programas');
 		} else{
-			echo $this->templates->render('usuario/login');
+		   redirect('/');
 		}
 	}
 
@@ -24,7 +24,7 @@ class Catalogos extends Main_Controller{
 		if ($this->session->userdata() && $this->session->userdata('logueado') == true) {
 			echo $this->templates->render('catalogos/proveedores');
 		} else{
-			echo $this->templates->render('usuario/login');
+			redirect('/');
 		}
 	}
 

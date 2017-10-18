@@ -23,12 +23,14 @@ class Usuario extends Main_Controller{
 	}
 
 	public function salir() {
-		if ($this->session->userdata() && $this->session->userdata('logueado') == true) {
-			$sesion = array('logueado' => false);
+		if ($this->session->userdata('logueado')) {
+			$sesion = array('logueado' => FALSE);
 			$this->session->set_userdata($sesion);
-		    echo json_encode(array('redirect'=>base_url('/'))); 
+		    //echo json_encode(array('redirect'=>base_url('/'))); 
+		    redirect('/');
 		} else {
-		    echo json_encode(array('redirect'=>base_url('/'))); 
+		    //echo json_encode(array('redirect'=>base_url('/'))); 
+		    redirect('/');
 		}
 	}
 
