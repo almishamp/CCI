@@ -183,7 +183,6 @@ class Usuario extends Main_Controller{
             exit();
        }
 
-    } 
-
+    }
 
 }

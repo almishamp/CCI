@@ -131,6 +131,9 @@
       ],
       onClickRow: function(row, $element, field){
         window.idProgramaSeleccionado = row.idPrograma;
+      },
+      onCheck: function(row, $element, field){
+        window.idProgramaSeleccionado = row.idPrograma;
       } 
 
     });
@@ -165,7 +168,10 @@
       ],
       onClickRow: function(row, $element, field){
         window.idArticuloSeleccionado = row.idArticulo;
-      } 
+      },
+      onCheck: function(row, $element, field){
+        window.idArticuloSeleccionado = row.idArticulo;
+      }  
 
     });
 

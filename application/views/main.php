@@ -251,6 +251,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url('catalogos/listProgramas/')?>"><i class="fa fa-rss-square"></i>Programas</a></li>
             <li><a href="<?php echo base_url('catalogos/listProveedores/')?>"><i class="fa fa-rss-square"></i>Proveedores</a></li>
+            <li><a href="<?php echo base_url('catalogos/listUsuarios/')?>"><i class="fa fa-rss-square"></i>Usuarios</a></li>
           </ul>
         </li>
       </ul>

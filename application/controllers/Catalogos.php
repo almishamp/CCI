@@ -7,6 +7,7 @@ class Catalogos extends Main_Controller{
 
 		parent::__construct();
 		$this->load->model('catalogos_model');
+		$this->load->model('usuario_model');
 		$this->load->library('form_validation');
 		$this->load->helper('url_helper');
 
@@ -28,6 +29,14 @@ class Catalogos extends Main_Controller{
 		}
 	}
 
+	public function listUsuarios(){
+		if ($this->session->userdata() && $this->session->userdata('logueado') == true) {
+			echo $this->templates->render('catalogos/usuarios');
+		} else{
+			redirect('/');
+		}
+	}
+
 	public function showPrograma(){
 		$idCatPrograma = $_POST['idCatPrograma'];
 		echo json_encode($this->catalogos_model->getPrograma($idCatPrograma));
@@ -36,6 +45,11 @@ class Catalogos extends Main_Controller{
 	public function showProveedor(){
 		$idCatProveedor = $_POST['idCatProveedor'];
 		echo json_encode($this->catalogos_model->getProveedor($idCatProveedor));
+	}
+
+	public function showUsuario(){
+		$idUsuario = $_POST['idUsuario'];
+		echo json_encode($this->usuario_model->obtenerUsuarioId($idUsuario));
 	}
 
 	public function getListProgramas(){
@@ -48,6 +62,12 @@ class Catalogos extends Main_Controller{
 		$proveedores = $this->catalogos_model->getListaCatalogoProveedores();
 	    $user = $this->session->userdata();
 		echo json_encode(array("proveedores" => $proveedores, "user" => $user)); 
+	}
+
+	public function getListUsuarios(){
+		$usuarios = $this->catalogos_model->getListaUsuarios();
+	    $user = $this->session->userdata();
+		echo json_encode(array("usuarios" => $usuarios, "user" => $user)); 
 	}
 
 	public function getProvedorCAT(){
@@ -169,7 +189,5 @@ class Catalogos extends Main_Controller{
 			echo json_encode(array("status" => 3, "msj"=> $msj)); 
        }		
 	}
-
-	
 
 }

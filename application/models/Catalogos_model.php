@@ -44,6 +44,11 @@ class Catalogos_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	function getListaUsuarios(){
+		$query = $this->db->get('ConectividadUsers');
+		return $query->result_array();
+	}
+
 	function getProveedorCat($idCatProveedor){
 		$query = $this->db->get_where('CA_Proveedores', array('idCatProveedor' => $idCatProveedor));
 		return $query->row_array();
