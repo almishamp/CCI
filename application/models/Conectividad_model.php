@@ -202,6 +202,20 @@ class Conectividad_model extends CI_Model{
 
 }
 
+//Funciones de busqueda para resumen general de conectividad
+
+function centrosNivelModalidad($idNivelEducativo, $idModalidad){
+	$this->db->select('c.idConectividad, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma,');
+	$this->db->from('conectividad as c');
+	$this->db->join('programa p', 'p.idConectividad = c.idConectividad');
+	$this->db->join('CA_programas cp', 'cp.IdCatPrograma = p.IdCatPrograma');
+	$this->db->join('CA_Tipoprograma tp', 'tp.idCatTipoPrograma=p.idCatTipoPrograma');
+	$this->db->where_in('c.idNivelEducativo', $idNivelEducativo);
+	$this->db->where_in('c.idModalidad', $idModalidad);
+	$query = $this->db->get();
+    return $query->result_array();
+}
+
 
 
 ?>

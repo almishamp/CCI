@@ -23,4 +23,15 @@ class Usuario_model extends CI_Model{
 		return $query->row_array();
 	}
 
+	public function verificarUsuario($email){
+		$query = $this->db->get_where('conectividadUsers', array('email' => $email));
+		return $query->row_array();
+	}
+
+	public function editarUsuario($dataUsuario, $idUsuario){
+			$this->db->where('idUsuario', $idUsuario);
+			$this->db->update('conectividadUsers', $dataUsuario);
+			return $this->db->affected_rows();
+		}
+
 }

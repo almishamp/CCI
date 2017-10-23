@@ -50,7 +50,6 @@
   });
  //Evento para agregar un nuevo usuario
   $('#btn_guardarRegistro').click(function(){
-   // alert('asd');
    nuevoUsuario();
   });
 
@@ -69,7 +68,6 @@
 
   var logearse = function(){
   	data = [];
-  	alert($('#email').val());
   	var valoresForm = "&nombreUsuario=" + $('#nombreUsuario').val() +
                       "&email=" + $('#email').val() +
                       "&contrasenia=" + $('#contrasenia').val() +
@@ -87,6 +85,7 @@
           success: function(response) {
             data = response;
            	if(data.status == 1){
+              modalAlertInfo.modal('hide');
            		document.location.href = data.redirect;
             }if(data.status == 2){
             	modalAlertInfo.modal('hide');
@@ -110,7 +109,6 @@
 
   var nuevoUsuario = function(){
   	data = [];
-  	alert($('#email').val());
   	var valoresForm = "&nombreUsuario=" + $('#nombreUsuario').val() +
                       "&email=" + $('#email').val() +
                       "&contrasenia=" + $('#contrasenia').val() +
@@ -130,7 +128,7 @@
            	if(data.status == 1){
            		modalAlertInfo.modal('hide');
            		$('#msjAlertSU').html(data.msj);
-           		limpiarFormUser();
+           		  limpiarFormUser();
                 modalAlertSuccess.modal('show');
             }if(data.status == 2){
             	modalAlertInfo.modal('hide');
@@ -157,9 +155,11 @@
     $('#form_login .form-group').removeClass('has-error'); // clear error class
     $('#form_login .form-group .help-block').empty(); // clear error string
     $('#div_nombreUsuario').hide();
-	$('#div_contraseniaRepeat').hide();
-	$('#p_registrar').hide();
-	$('#p_logear').show();
-	$('#btn_registrarse').show();
-	$('#btn_guardarRegistro').hide();
+  	$('#div_contraseniaRepeat').hide();
+  	$('#p_registrar').hide();
+  	$('#p_logear').show();
+  	$('#btn_registrarse').hide();
+  	$('#btn_guardarRegistro').hide();
+    $('#btn_acceder').show();
+
   }

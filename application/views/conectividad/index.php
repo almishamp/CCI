@@ -19,8 +19,8 @@
       Lista Conectividad
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
+      <!--li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Dashboard</li-->
     </ol>
 </section>
 <section class="content">
@@ -343,7 +343,7 @@
                     <label class="control-label col-md-3">Marca* : </label>
                     <div class="col-md-3">
                         <span class="help-block" id="marca"></span>
-                        <input type="text" class="mayusculas" name="marca_input" id="marca_input">
+                        <input type="text" class="mayusculas" name="marca_input" id="marca_input" size="13">
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -357,7 +357,7 @@
                     <label class="control-label col-md-3">Serie: </label>
                     <div class="col-md-3">
                         <span class="help-block" id="serie"></span>
-                        <input type="text" class="mayusculas" name="serie_input" id="serie_input">
+                        <input type="text" class="mayusculas" name="serie_input" id="serie_input" size="13">
                     </div>
                 </div>
                 <div class="form-group">
@@ -403,7 +403,7 @@
                     <label class="control-label col-md-3">Marca* : </label>
                     <div class="col-md-3">
                         <span class="help-block" id="marca"></span>
-                        <input type="text" class="mayusculas" name="marca_input" id="marca_input">
+                        <input type="text" class="mayusculas" name="marca_input" id="marca_input" size="30">
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -417,7 +417,7 @@
                     <label class="control-label col-md-3">Serie: </label>
                     <div class="col-md-3">
                         <span class="help-block" id="serie"></span>
-                        <input type="text" class="mayusculas" name="serie_input" id="serie_input">
+                        <input type="text" class="mayusculas" name="serie_input" id="serie_input" size="30">
                     </div>
                 </div>
                 <div class="form-group">

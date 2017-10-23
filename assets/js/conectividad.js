@@ -1,7 +1,6 @@
 
   var edicion = false;
   var opcionConectividad = 1;
-  var mostrarElemnetos = 0;
   var filtrosArray = [];
   var busquedaActual = 0;
   var busquedaAnterior = 0;
@@ -9,6 +8,8 @@
   var filtros = false;
 
   $(document).ready(function(){
+
+    verificarUsuario();
 
     //getCatalogos();
 
@@ -436,7 +437,7 @@
   $('#btnAgregarPrograma').click(function(){
     if(window.idProgramaSeleccionado){
         window.idProgramaSeleccionado = null;
-        
+        obtenerDetallesPrograma();
     }else{
       obtenerDetallesPrograma(); 
     }  
@@ -508,6 +509,7 @@
   $('#btnAgregarArticulo').click(function(){
     if(window.idArticuloSeleccionado){
         window.idArticuloSeleccionado = null;
+        obtenerDetallesArticulo();
     }else{
       obtenerDetallesArticulo(); 
     }  
@@ -520,10 +522,6 @@
    //EVENTO para mostrar modal de detalles proveedor
   $('#btnMostrarProveedor').click(function(){
     obtenerDetallesProveedor();
-  });
-  
-  $('#btnEditarEditarArticulo').click(function(){
-
   });
 
   $('#btn_cancelar_art').click(function(){
@@ -681,6 +679,14 @@
           },
           success: function(response) {
             data = response;
+            if(data.user.role === 1){
+              $('#btnAgregarCentro').show();
+              $('#btnEditar').show();
+            }
+            else{
+              $('#btnAgregarCentro').hide();
+              $('#btnEditar').hide();
+            }
 
             $('#btn_conConexion').addClass('btn-primary').removeClass('btn-default'); 
             $('#btn_sinConexion').addClass('btn-default').removeClass('btn-primary');
@@ -930,9 +936,26 @@
               }else{
                 $('#modal_conectividad').modal('show'); 
               }
+
+              if(data.user.role === 1){
+                $('#btnEditarPrograma').show();
+                $('#btnEditarArticulo').show();
+                $('#btnAgregarPrograma').show();
+                $('#btnAgregarArticulo').show();
+                $('#admin_opciones').show();
+              }else{
+                $('#btnEditarPrograma').hide();
+                $('#btnEditarArticulo').hide();
+                $('#btnAgregarPrograma').hide();
+                $('#btnAgregarArticulo').hide();
+                $('#btnAgregarArticulo').hide();
+                $('#admin_opciones').hide();
+
+                
+              }
           }
       }); 
-    
+
     }else{
       $('#form_show').hide();
       $('#form_busqueda').show();
@@ -979,8 +1002,6 @@
                 $('#selectStatusP').val(data.programa.status);
                 $('#gid_input').show();
                 $('#vsatid_input').show();
-                $('#ipTelefonia_input').show();
-                $('#ipModem_input').show();
                 $('#div_gid_vsatid').show();
               }else{
                 $('#div_gid_vsatid').hide();
@@ -989,7 +1010,8 @@
               $('#selectStatusP').show();
               $('#select_proveedores').show();
               $('#select_programas').hide();
-
+              $('#ipTelefonia_input').show();
+              $('#ipModem_input').show();
               $('#selectTipoPrograma').hide();
               $('#statusPrograma').hide();
               $('#gid').hide();
@@ -1239,8 +1261,6 @@
             success: function(response) {
               data = response;
               if(data.status === true){
-                 alert(data.idPrograma);
-
                  $('#form_proveedor').hide();
                  $('#msjAlertS').html(data.msj);
                  modalAlertInfo.modal('hide');
@@ -1592,7 +1612,6 @@
 
   var exportarExcel = function(){
     var dataInfo = $('#tConectividad').bootstrapTable('getData');
-    alert(dataInfo);
     $.ajax({
           url : "exportarExcel",
           type: "POST",
@@ -1605,13 +1624,32 @@
           },
           success: function(response) {
             data = response;
-            alert(data);
           },
           error: function (jqXHR, textStatus, errorThrown)
           {
               alert('Error deleting data');
           }
       }); 
+  } 
+
+  var verificarUsuario = function(){
+    $.ajax({
+          url : "../usuario/verificarUsuario",
+          type: "POST",
+          dataType: "JSON",
+          async: false,
+          success: function(response) {
+            data = response;
+            if(data.role === 1)
+              $('#admin_opciones').show();
+            else
+              $('#admin_opciones').hide();
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+              alert('Error deleting data');
+          }
+      });
   } 
 
 

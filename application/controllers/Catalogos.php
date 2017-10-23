@@ -190,4 +190,109 @@ class Catalogos extends Main_Controller{
        }		
 	}
 
+	public function nuevoUsuario(){
+    	$email = $_POST['email'];
+		$contrasenia =$_POST['contrasenia'];
+		$nombreUsuario = $_POST['nombreUsuario'];
+		$role = $_POST['role'];
+		$status = $_POST['status'];
+		$this->validarUsuario($nombreUsuario, $email, $contrasenia);
+		$usuario = $this->usuario_model->verificarUsuario($email);
+		if($usuario){
+			$msj = "El correo ya esta asociado a un usuario registrado";
+			echo json_encode(array("status" => 3, "msj"=> $msj)); 
+		}else{
+			$dataUsuario = array('email' => $email,
+								'contrasenia' => $contrasenia,
+								'nombreUsuario' => $nombreUsuario ,
+								'role' => $role,
+								'estatus' => $status
+								);
+	
+			$idUsuario = $this->usuario_model->saveUsuario($dataUsuario);
+			if($idUsuario){
+				$msj = "Usuario creado con exito";
+				//$usuarios = $this->catalogos_model->getListaUsuarios();
+				echo json_encode(array('status'=>1, "msj"=> $msj)); 
+			}else{
+				$msj = "Ocurrio un error al guardar el registro, intentelo nuevamente";
+				echo json_encode(array('status'=>3, "msj"=> $msj)); 
+			}
+
+		}
+    }
+
+      public function editarUsuario(){
+    	$email = $_POST['email'];
+		$contrasenia =$_POST['contrasenia'];
+		$nombreUsuario = $_POST['nombreUsuario'];
+		$role = $_POST['role'];
+		$status = $_POST['status'];
+		$idUsuario = $_POST['idUsuario'];
+		$this->validarUsuario($nombreUsuario, $email, $contrasenia);
+		$usuario = $this->usuario_model->obtenerUsuario($email, $contrasenia);
+		if($usuario['idUsuario'] != $idUsuario){
+			$msj = "El correo ya esta asociado a un usuario registrado";
+			echo json_encode(array("status" => 3, "msj"=> $msj)); 
+		}else{
+			$dataUsuario = array('email' => $email,
+								'contrasenia' => $contrasenia,
+								'nombreUsuario' => $nombreUsuario ,
+								'role' => $role,
+								'estatus' => $status
+								);
+	
+			$idUsuario = $this->usuario_model->editarUsuario($dataUsuario, $idUsuario);
+			if($idUsuario){
+				$msj = "Usuario editado con exito";
+				echo json_encode(array('status'=>1, "msj"=> $msj)); 
+			}else{
+				$msj = "Ocurrio un error al editar el registro, intentelo nuevamente";
+				echo json_encode(array('status'=>3, "msj"=> $msj)); 
+			}
+
+		}
+    }
+
+    //Validación para cuando el administrador crea un nuevo usuario
+    private function validarUsuario($nombreUsuario, $email, $contrasenia){
+		$data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+        $data['status'] = TRUE;
+        $email = trim($email);
+		if(!$email)
+        {
+            $data['inputerror'][] = 'email_input';
+            $data['error_string'][] = 'Por favor ingrese el email';
+            $data['status'] = FALSE;
+        }else{
+        	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			    $data['inputerror'][] = 'email_input';
+	            $data['error_string'][] = 'Por favor agregue una cuenta de correo valida';
+	            $data['status'] = FALSE;
+			}
+        }
+	    if(!$contrasenia){
+            $data['inputerror'][] = 'password_input';
+            $data['error_string'][] = 'Por favor ingrese la contraseña';
+            $data['status'] = FALSE;
+        }
+		
+        if(!$nombreUsuario)
+        {
+            $data['inputerror'][] = 'nombreUsuario_input';
+            $data['error_string'][] = 'Por favor ingrese el nombre de usuario';
+            $data['status'] = FALSE;
+        }
+		
+       if($data['status'] === FALSE){ 
+       		$msj = "Favor de verifivar los datos";
+			echo json_encode(array("status" => 2, "msj"=> $msj, "data" => $data)); 
+            exit();
+       }
+
+    } 
+
+
 }

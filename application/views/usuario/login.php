@@ -14,7 +14,7 @@
 
     <form action="usuario/acceder" method="post" class="login-form" id="form_login">
       <div class="form-group has-feedback" id="div_nombreUsuario">
-        <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control" placeholder="Nombre completo">
+        <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control mayusculas" placeholder="Nombre completo">
         <span class="help-block"></span>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>

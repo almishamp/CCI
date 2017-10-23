@@ -90,9 +90,9 @@
   $('#btnEditarUsuario').click(function(){
     if(window.idUsuarioSeleccionado){
         edicion = true;
-        obtenerDetallesCUsuario();
+        obtenerDetalleCUsuario();
     }else{
-      $('#msjAlertD').html("Seleccione un Centro");
+      $('#msjAlertD').html("Seleccione un Usuario");
       modalAlertDanger.modal('show'); 
     } 
   });
@@ -100,7 +100,7 @@
   $('#btnAgregarUsuario').click(function(){
     if(window.idUsuarioSeleccionado)
         window.idUsuarioSeleccionado = null;
-    obtenerDetalleUsuario(); 
+        obtenerDetalleCUsuario(); 
   });
 
 //EVENTO para limpiar modal
@@ -112,8 +112,12 @@
     limpiarModalCUsuario();
   });
 
-  $('#btnSaveCUsuario').click(function(){
+  $('#btnSaveUsuario').click(function(){
     guardarCUsuario();
+  });
+
+  $('#btn_cancelar_usuario').click(function(){
+    limpiarModalCUsuario();
   });
 
   var recargarCUsuarios = function(){
@@ -125,7 +129,7 @@
           async: false,
           success: function(response) {
             data = response;
-            $('#tUsuarios').bootstrapTable('load', data.Usuarios);
+            $('#tUsuarios').bootstrapTable('load', data.usuarios);
             $('#userNameSpan1').html(data.user.nombreUsuario);
             $('#userNameSpan2').html(data.user.nombreUsuario);
           }
@@ -149,7 +153,7 @@
 
             data = response;
             if(edicion === true){
-              $('#select_statusUsuario').val(data.status);
+              $('#select_statusUsuario').val(data.estatus);
               $('#select_rolUsuario').val(data.role);
               $('#nombreUsuario_input').val(data.nombreUsuario);
               $('#password_input').val(data.contrasenia);
@@ -162,13 +166,18 @@
               $("#btnSaveUsuario").attr("value","Editar Usuario");
               $('#btnSaveUsuario').show();
               $("#btn_cancelar_usuario").attr("value","Cancelar");
+              $('#select_statusUsuario').show();
+              $('#select_rolUsuario').show();
               $('#nombreUsuario_input').show();
+              $('#password_input').show();
+              $('#email_input').show();
               $('#UsuarioDetalle').hide();
               $('#UsuarioEdicion').show();
               $('#UsuarioNuevo').hide();
-              $('#select_statusCP').show();
             }else{
               $('#nombreUsuario').html(data.nombreUsuario);
+              $('#password').html(data.contrasenia);
+              $('#email').html(data.email);
               if(data.estatus === 1){
                 $('#statusUsuario').addClass("btn btn-xs btn-success");
                 $('#statusUsuario').html("Activo");
@@ -176,16 +185,29 @@
                 $('#statusUsuario').addClass("btn btn-xs btn-danger");
                 $('#statusUsuario').html("Inactivo");
               }
+              if(data.role === 1){
+                $('#rol').addClass("btn btn-xs btn-success");
+                $('#rol').html("Administrador");
+              }else{
+                $('#rol').addClass("btn btn-xs btn-success");
+                $('#rol').html("Normal");
+              }
               $('#nombreUsuario').show();
               $('#statusUsuario').show();
+              $('#rol').show();
+              $('#password').show();
+              $('#email').show();
               $('#btnSaveUsuario').hide();
               $("#btn_cancelar_Usuario").attr("value","Cerrar");
               $('#nombreUsuario_input').hide();
               $('#select_statusUsuario').hide();
               $('#select_rolUsuario').hide();
+              $('#password_input').hide();
+              $('#email_input').hide();
               $('#UsuarioDetalle').show();
               $('#UsuarioEdicion').hide();
               $('#UsuarioNuevo').hide();
+
             }
             
             $('#modal_usuario').modal('show'); 
@@ -196,31 +218,39 @@
       $('#nombreUsuario_input').show();
       $('#select_statusUsuario').show();
       $('#select_rolUsuario').show();
-      $('#select_statusUsuario').hide();
-      $('#select_rolUsuario').hide();
-      $('#CPNuevo').show();
-      $('#CPDetalle').hide();
-      $('#CPEdicion').hide();
+      $('#password_input').show();
+      $('#email_input').show();
       $("#btnSaveUsuario").attr("value","Guardar usuario");
       $('#btnSaveUsuario').show();
       $("#btn_cancelar_cUsuario").attr("value","Cancelar");
-      $('#modal_usuario').modal('show'); 
+      $('#nombreUsuario').hide();
+      $('#statusUsuario').hide();
+      $('#password').hide();
+      $('#rol').hide();
+      $('#email').hide();
+      $('#UsuarioDetalle').hide();
+      $('#UsuarioEdicion').hide();
+      $('#UsuarioNuevo').show(); 
+      $('#modal_usuario').modal('show');
     }
    
   }
 
-  //Función para guardar Artículo, creación y edición
+  //Función para guardar usuario, creación y edición
   var guardarCUsuario = function(){
      data = [];
-      var idCatUsuarioS = window.idCatUsuarioSeleccionado;
-      if(idCatUsuarioS){
+      var idUsuarioS = window.idUsuarioSeleccionado;
+      if(idUsuarioS){
         var metodo = '../editarUsuario';
       }else{
         var metodo = '../nuevoUsuario';
       }
-      var valoresForm = "&nombre=" + $('#nombrecp_input').val() + 
-                        "&status=" + $('#select_statusCP').val() + 
-                        "&idCatUsuario=" + idCatUsuarioS;
+      var valoresForm = "&nombreUsuario=" + $('#nombreUsuario_input').val() + 
+                        "&status=" + $('#select_statusUsuario').val() + 
+                        "&email=" + $('#email_input').val() + 
+                        "&role=" + $('#select_rolUsuario').val() + 
+                        "&contrasenia=" + $('#password_input').val() + 
+                        "&idUsuario=" + idUsuarioS;                
       $.ajax({
           url : metodo,
           type: "POST",
@@ -235,14 +265,19 @@
             data = response;
             if(data.status === 1){
               modalAlertInfo.modal('hide');
-              $('#modal_CUsuarios').modal('hide');
+              $('#modal_usuario').modal('hide');
               $('#msjAlertS').html(data.msj);
               modalAlertSuccess.modal('show');
               limpiarModalCUsuario(); 
             }
             if(data.status === 2){
-                $('#msjAlertD').html(data.msj);
-                modalAlertDanger.modal('show'); 
+              modalAlertInfo.modal('hide');
+              $('#msjAlertD').html(data.msj);
+              for (var i = 0; i < data.data.inputerror.length; i++) {
+                  $('[name="'+data.data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                  $('[name="'+data.data.inputerror[i]+'"]').next().text(data.data.error_string[i]); //select span help-block class set text error string
+              } 
+              modalAlertDanger.modal('show'); 
             }
             if(data.status === 3){
                 modalAlertInfo.modal('hide');

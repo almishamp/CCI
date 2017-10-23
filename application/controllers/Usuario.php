@@ -40,7 +40,7 @@ class Usuario extends Main_Controller{
 		$nombreUsuario = $_POST['nombreUsuario'];
 		$contraseniaRepeat = $_POST['contraseniaRepeat'];
 		$this->validarNuevoUsuario($nombreUsuario, $email, $contrasenia, $contraseniaRepeat);
-		$usuario = $this->usuario_model->obtenerUsuario($email, $contrasenia);
+		$usuario = $this->usuario_model->verificarUsuario($email);
 		if($usuario){
 			$msj = "El correo ya esta asociado a un usuario registrado";
 			echo json_encode(array("status" => 3, "msj"=> $msj)); 
@@ -76,14 +76,14 @@ class Usuario extends Main_Controller{
 				'nombreUsuario' => $usuario['nombreUsuario'],
 				'role' => $usuario['role'],
 				'email' => $usuario['email'],
-				'status' => $usuario['estatus'],
+				'estatus' => $usuario['estatus'],
 				'logueado' => true
 			);
 			//print_r($sesion);
 			$this->session->set_userdata($sesion);
-			if($sesion['status'] == 1 && $sesion['logueado'] == true)
+			if($sesion['estatus'] == 1 && $sesion['logueado'] == true)
 				echo json_encode(array('status'=>1, 'redirect'=>base_url('conectividad/home'))); 
-			if($sesion['logueado'] == true && $sesion['status'] == 0){
+			if($sesion['logueado'] == true && $sesion['estatus'] == 0){
 				$msj = "El usuario ingresado esta inactivo";
 			    echo json_encode(array("status" => 3, "msj"=> $msj)); 
 			}
@@ -92,7 +92,8 @@ class Usuario extends Main_Controller{
 		    echo json_encode(array("status" => 3, "msj"=> $msj)); 
 		}	
 	}
-
+    
+    //Validación para cuando un usuario nuevo se registra
 	private function validarNuevoUsuario($nombreUsuario, $email, $contrasenia, $contraseniaRepeat){
 		$data = array();
         $data['error_string'] = array();
@@ -185,4 +186,7 @@ class Usuario extends Main_Controller{
 
     }
 
+    public function verificarUsuario(){
+		echo json_encode($this->session->userdata());
+    }
 }

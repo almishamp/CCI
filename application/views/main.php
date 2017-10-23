@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>Conectividad</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css'); ?>">
@@ -42,10 +42,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Logo -->
     <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <!-- mini logo for sidebar mini 50x50 pixels >
       <span class="logo-mini"><b>A</b>LT</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <!-- logo for regular state and mobile devices>
+      <span class="logo-lg"><b>Admin</b>LTE</span-->
     </a>
 
     <!-- Header Navbar -->
@@ -59,11 +59,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
           <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
+            <!-- Menu toggle button >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success">4</span>
-            </a>
+            </a-->
             <ul class="dropdown-menu">
               <li class="header">You have 4 messages</li>
               <li>
@@ -95,11 +95,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
           <!-- Notifications Menu -->
           <li class="dropdown notifications-menu">
-            <!-- Menu toggle button -->
+            <!-- Menu toggle button >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning">10</span>
-            </a>
+            </a-->
             <ul class="dropdown-menu">
               <li class="header">You have 10 notifications</li>
               <li>
@@ -119,10 +119,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- Tasks Menu -->
           <li class="dropdown tasks-menu">
             <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <!--a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
               <span class="label label-danger">9</span>
-            </a>
+            </a-->
             <ul class="dropdown-menu">
               <li class="header">You have 9 tasks</li>
               <li>
@@ -158,14 +158,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="user-image" alt="User Image">
+              <!--img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span id="userNameSpan1" class="hidden-xs"></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="img-circle" alt="User Image">
+                <!--img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="img-circle" alt="User Image"-->
 
                 <p>
                   <span id="userNameSpan1" class="hidden-xs"></span>
@@ -189,11 +189,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <form method="POST" action="<?php echo base_url('usuario/salir') ?>">
-                    <input type="submit" value="Cerrar session" id="btnCerrarSession" class="btn btn-default">
+                    <input type="submit" value="Cerrar sesión" id="btnCerrarSession" class="btn btn-default">
                   </form>
                 </div>
               </li>
@@ -216,34 +215,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url('assets/dist/img/user.jpg'); ?>" class="img-circle" alt="User Image">
         </div>
-        <div class="pull-left info">
-          <p><span id="userNameSpan2" class="hidden-xs"></span></p>
+        <div class="pull-left">
           <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fa fa-circle text-success"></i>En linea: <span id="userNameSpan2" class="hidden-xs"></span></a>
         </div>
       </div>
 
       <!-- search form (Optional) -->
       <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
+        <!--div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
               <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
               </button>
             </span>
-        </div>
+        </div-->
       </form>
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <!--li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="<?php echo base_url('conectividad/home')?>"><i class="fa fa-rss"></i> <span>Lista Conectividad</span></a></li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-book"></i> <span>Catalogos</span>
+          <a href="#" id="admin_opciones"><i class="fa fa-book"></i> <span>Catalogos</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -276,7 +273,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       Anything you want
     </div-->
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017 <a href="#">Usebeq</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2017 <a href="#">Usebeq</a>.</strong>
   </footer>
 
   <!-- Control Sidebar -->
@@ -356,221 +353,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
-
-  
-
-  <!--MODAL CONECTIVIDAD EDICION, Y DETALLE-->
-  <!--div class="modal fade" id="modal_conectividad">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" id="btn_close_Con" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h4 id="tDetalle" class="modal-title">Detalle conectividad</h4>
-          <h4 id="tEdicion" class="modal-title">Edición conectividad</h4>
-          <h4 id="tBusquedaConect" class="modal-title">Agregar centro a lista conectividad</h4>
-        </div>
-
-        <div class="modal-body">
-          <form id="form_busqueda" class="form-horizontal">
-              <div class="form-group">
-                  <label class="control-label col-md-3">Ingresa Clave CT: </label>
-                    <div class="col-md-3">
-                            <input id="claveCT_buscar" placeholder="Clave CT" class="form-control" type="text" maxlength="10">
-                            <span class="help-block"></span>
-                     </div>
-                    <div class="col-md-6">
-                            <button type="button" id="btnBuscarConectividad" class="btn btn-info">
-                        Buscar
-                    </button>
-                    </div>
-              </div>
-          </form>
-           
-          <form id="form_show" class="form-horizontal">
-            <div class="form-body">
-                <div class="form-group">
-                    <label class="control-label col-md-3">Clave CT: </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="claveCT"></span>
-                    </div>
-                    <label class="control-label col-md-3">Status: </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="statusConectividad"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-3">Nombre CT: </label>
-                    <div class="col-md-6">
-                        <span class="help-block" id="nombreCT"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Municipio: </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="municipio"></span>
-                    </div>
-                    <label class="control-label col-md-3">Localidad: </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="localidad"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Colonia: </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="colonia"></span>
-                    </div>
-                    <label class="control-label col-md-3">Nivel Educativo:</label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="nivelEducativo"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Turno</label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="turno"></span>
-                    </div>
-                    <label class="control-label col-md-3">Modalidad:</label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="modalidad"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Latitud: </label>
-                    <div class="col-md-3">
-                        <input class="" type="text" name="latitud" id="latitudInput" size="20" placeholder="Latitud">
-                        <span class="help-block" id="latitud"></span>
-                    </div>
-                    <label class="control-label col-md-3">Longitud:</label>
-                    <div class="col-md-3">
-                        <input class="" type="text" name="longitud" id="longitudInput" size="20" placeholder="Longitud">
-                        <span class="help-block" id="longitud"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Responsable sitio:</label>
-                    <div class="col-md-6" id="div_rsitio">
-                        <span class="help-block" id="respSitio"></span>
-                    </div>
-                    <div class="col-md-6" id="divSitio">
-                        <input class="letras" type="text" name="rsitio" id="rsitio" size="50" placeholder="Nombre Responsable Sitio">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Responsable Inventario:</label>
-                    <div class="col-md-6" id="div_rinventario">
-                        <span class="help-block" id="respInventario"></span>
-                    </div>
-                    <div class="col-md-6" id="divInventario">
-                        <input class="letras" type="text" name="rinventario" id="rinventario" size="50" placeholder="Nombre Responsable Inventario">
-                    </div>
-                    <div class="col-md-3" id="saveConectividadB">
-                        <input type="button" value="Editar" ="" id="edicionConectividadB" class="btn btn-success">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <div id="toolbarP">
-                      <button type="button" class="btn btn-primary" id="btnMostrarPrograma">Detalles</button>
-                      <button type="button" class="btn btn-primary" id="btnEditarPrograma">Editar</button>
-                      <button type="button" class="btn btn-primary" id="btnAgregarPrograma">Agregar programa</button>
-                    </div>
-                    <table id="tProgramas"></table>
-                  </div>
-                  <div class="col-md-2"></div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <div id="toolbarA">
-                      <button type="button" class="btn btn-primary" id="btnMostrarArticulo">Detalles</button>
-                      <button type="button" class="btn btn-primary" id="btnEditarArticulo">Editar</button>
-                      <button type="button" class="btn btn-primary" id="btnAgregarArticulo">Agregar artículo</button>
-                    </div>
-                    <table id="tArticulos"></table>
-                  </div>
-                  <div class="col-md-2"></div>
-                </div>
-            </div>
-          </form>       
-        </div>
-        <div class="modal-footer">
-        <br><br>
-           <input type="button" value="Cancelar" id="btn_cancelar_con" class="btn btn-default pull-left" data-dismiss="modal">
-        </div>
-      </div>
-      <!-- /.modal-content >
-    </div>
-    <!-- /.modal-dialog >
-  </div-->
-
-  
-
-  <!--div class="modal fade" id="modal_articulo">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" id="btn_close_Articulo" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h4 id="aDetalle" class="modal-title">Detalle artículo</h4>
-          <h4 id="aEdicion" class="modal-title">Edición artículo</h4>
-          <h4 id="aNuevo" class="modal-title">Agregar artículo</h4>
-        </div>
-           
-          <form id="form_articulo" class="form-horizontal">
-            <div class="form-body">
-                <div class="form-group">
-                    <label class="control-label col-md-3">Descripción* : </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="descripcion"></span>
-                        <textarea class="form-control" rows="5" name="descripcion_area" id="descripcion_area"></textarea>
-                        <span class="help-block"></span>
-                    </div>
-                    <label class="control-label col-md-3">Marca* : </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="marca"></span>
-                        <input type="text" name="marca_input" id="marca_input">
-                        <span class="help-block"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Modelo* : </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="modelo"></span>
-                        <input type="text" name="modelo_input" id="modelo_input">
-                        <span class="help-block"></span>
-                    </div>
-                    <label class="control-label col-md-3">Serie: </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="serie"></span>
-                        <input type="text" name="serie_input" id="serie_input">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Status: </label>
-                    <div class="col-md-3">
-                        <span class="help-block" id="statusArticulo"></span>
-                        <select class="form-control xs" id="selectArticulo">
-                          <option value="1">Activo</option>
-                          <option value="0">Inactivo</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-          </form>       
-        <div class="modal-footer">
-           <input type="button" value="Cancelar" id="btn_cancelar_art" class="btn btn-default pull-left" data-dismiss="modal">
-           <input type="button" value="Guardar Artículo" id="btnSaveArticulo" class="btn btn-success">
-        </div>
-      </div>
-      <!-- /.modal-content >
-    </div>
-    <!-- /.modal-dialog >
-  </div>  
-
       <!--MODAL filtros-->
   <div class="modal fade" id="modal_filtros">
     <div class="modal-dialog modal-lg">
@@ -611,14 +393,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     
                 </div>
-                <!--div class="form-group">
-                  <div class="col-md-8">
-                        <table id="CA_Modalidad"></table>
-                        <table id="CA_RegionMunicipio"></table>
-                        <table id="CA_NivelEducativo"></table>
-                        <table id="CA_Turno"></table>
-                    </div>
-                </div-->
             </div>
           </form>
         </div>
@@ -724,6 +498,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- FastClick -->
 <!--script src="<?php echo base_url('assets/bower_components/fastclick/lib/fastclick.js');?>"></script-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.js"></script>
+<script src="<?php echo base_url('assets/bootstrap-table/locale/bootstrap-table-es-MX.min.js')?>"></script>
 <script src="<?php echo base_url('assets/js/validaciones.js');?>"></script>
 
 <?php echo $this->section('extra_js')?>

@@ -80,6 +80,7 @@ class Conectividad extends Main_Controller {
 		$data['conectividad'] = $this->conectividad_model->getCentro($idConectividad);
 		$data['programas'] = $this->conectividad_model->getProgramas($idConectividad);
 		$data['articulos'] = $this->conectividad_model->getArticulos($idConectividad);
+		$data['user'] = $this->session->userdata();
 		echo json_encode($data);
 	}
 
@@ -372,6 +373,98 @@ class Conectividad extends Main_Controller {
 			$objWriter->save('php://output');
 			exit; 
 		}  
+	} 
+
+	public function exportarExcelGeneral(){
+		$centros = array();
+		//$centros = $this->session->userdata('conectividad');
+		$secundariasGeneral = $this->conectividad_model->centrosNivelModalidad(2, 1);
+	/*	$secundariasTecnica = $this->conectividad_model->centrosNivelModalidad(2, 7);
+		$secundariasTeles = $this->conectividad_model->centrosNivelModalidad(2, 4);
+		$secundariasEstatal = $this->conectividad_model->centrosNivelModalidad(2, 6);
+
+		$primariasIndigena = $this->conectividad_model->centrosNivelModalidad(1, 5);
+		$primariasGeneral = $this->conectividad_model->centrosNivelModalidad(1, 1);
+		$primariasEstatal = $this->conectividad_model->centrosNivelModalidad(1, 6);
+
+		$preescolarGeneral = $this->conectividad_model->centrosNivelModalidad(4, 1);
+		$preescolarEstatal = $this->conectividad_model->centrosNivelModalidad(4, 6);*/
+
+		print_r($secundariasGeneral);
+
+
+
+	/*	if(count($centros) > 0){
+    		$this->load->library('excel');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel->
+				getProperties()
+						->setCreator("Conectividad")
+						->setLastModifiedBy("Usuario")
+						->setTitle("Conectividad_lista")
+						->setSubject("Reporte")
+						->setDescription('Lista de Centros')
+						->setKeywords("conectividad")
+						->setCategory("reportes");
+			$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue('B3', 'SECUNDARIA')
+						->setCellValue('C3', 'TOTALES')
+						->setCellValue('D3', 'HDT')
+						->setCellValue('E1', 'CQ')
+						->setCellValue('F1', 'USEBEQ')
+						->setCellValue('G1', 'MC2')
+						->setCellValue('H1', 'RED BICENTENARIO')
+						->setCellValue('I1', '10K')
+						->setCellValue('J1', '11K')
+						->setCellValue('K1', 'AULA TELMEX')
+						->setCellValue('L1', 'RED 23')
+						->setCellValue('M1', 'JS Y SZ')
+						->setCellValue('N1', 'ESTATAL')
+						->setCellValue('O1', 'FEDEARL')
+						;
+			$x = 2;
+			foreach ($centros as $item) {
+				$objPHPExcel->setActiveSheetIndex(0)
+								->setCellValue('A'.$x, $item['claveCT'])
+								->setCellValue('B'.$x, $item['nombreCT'])
+								->setCellValue('C'.$x, $item['nivelCT'])
+								->setCellValue('D'.$x, $item['modalidad'])
+								->setCellValue('E'.$x, $item['municipio'])
+								->setCellValue('F'.$x, $item['localidad'])
+								->setCellValue('G'.$x, $item['colonia'])
+								->setCellValue('H'.$x, $item['nivelEducativo'])
+								->setCellValue('I'.$x, $item['turno'])
+								;
+					$arrayName = "";
+					foreach ($item['programas'] as $programa) {
+						$arrayName = $arrayName. $programa."\n";
+					}
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$x, $arrayName);
+					$objPHPExcel->setActiveSheetIndex(0)->getStyle('J'.$x)->getAlignment()->setWrapText(true); 
+					$arrayName = "";
+					foreach ($item['proveedores'] as $proveedor) {	
+						$arrayName = $arrayName. $proveedor."\n";
+					}
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$x, $arrayName);
+				    $objPHPExcel->setActiveSheetIndex(0)->getStyle('K'.$x)->getAlignment()->setWrapText(true); 
+
+				   	if($item['statusServicio'] == 1)
+						$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$x, 'CON CONECTIVIDAD');
+					if($item['statusServicio'] == 0)
+						$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$x, 'SIN CONECTIVIDAD');
+
+
+				$x++;
+			}   
+			$objPHPExcel->getActiveSheet()->setTitle('Conectividad');
+			$objPHPExcel->setActiveSheetIndex(0);
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="conectividad.xls"');
+			header('Cache-Control: max-age=0');
+			$objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$objWriter->save('php://output');
+			exit; 
+		}  */
 	} 
 
 }

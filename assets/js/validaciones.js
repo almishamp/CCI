@@ -25,7 +25,6 @@ var cerrarSession = function(){
           },
           success: function(response) {
             data = response;
-            alert(data.redirect);
             modalAlertInfo.modal('hide');
             document.location.href = data.redirect;
           },

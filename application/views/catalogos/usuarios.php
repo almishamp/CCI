@@ -8,12 +8,12 @@
 <div id="toolbarUsuarios">
     <button type="button" class="btn btn-primary" id="btnMostrarUsuario">Detalles</button>
     <button type="button" class="btn btn-primary" id="btnEditarUsuario">Editar</button>
-    <button type="button" class="btn btn-primary" id="btnAgregarUsuario">Agregar uauario</button>
+    <button type="button" class="btn btn-primary" id="btnAgregarUsuario">Agregar usuario</button>
 </div>
 
 <section class="content-header">
     <h1>
-      Catalogo proveedores
+      Administración de usuarios
     </h1>
 </section>
 
@@ -58,13 +58,13 @@
         </div>
 
         <div class="modal-body"> 
-          <form action="#" id="form_cproveedores" class="form-horizontal">
+          <form action="#" id="form_cUsuarios" class="form-horizontal">
             <div class="form-body">
                 <div class="form-group">
                   <label class="control-label col-md-3">Nombre usuario: </label>
                   <div class="col-md-6">
                       <span class="help-block" id="nombreUsuario"></span>
-                      <input type="text" name="nombreUsuario_input" id="nombreUsuario_input" size="60" class="mayusculas">
+                      <input type="text" name="nombreUsuario_input" id="nombreUsuario_input" size="40" class="mayusculas">
                       <span class="help-block"></span>
                   </div>
                 </div>
@@ -81,26 +81,27 @@
                   <div class="col-md-3">
                       <span class="help-block" id="rol"></span>
                       <select class="form-control xs" id="select_rolUsuario" ip="select_rolUsuario">
-                          <option value="1">Admin</option>
+                          <option value="1">Administrador</option>
                           <option value="2">Normal</option>
                       </select>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3">Password: </label>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                       <span class="help-block" id="password"></span>
-                      <input type="text" name="password_input" id="password_input" size="60" class="mayusculas" >
+                      <input type="text" name="password_input" id="password_input" size="15" class="" >
+                      <span class="help-block"></span>
+                  </div>
+                  <label class="control-label col-md-3">Email: </label>
+                  <div class="col-md-3">
+                      <span class="help-block" id="email"></span>
+                      <input type="text" name="email_input" id="email_input" size="15">
                       <span class="help-block"></span>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label col-md-3">Email: </label>
-                  <div class="col-md-6">
-                      <span class="help-block" id="email"></span>
-                      <input type="text" name="email_input" id="email_input" size="60">
-                      <span class="help-block"></span>
-                  </div>
+                  
                 </div>
             </div>
           </form>    
