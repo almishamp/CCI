@@ -200,22 +200,37 @@ class Conectividad_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	//Funciones de busqueda para resumen general de conectividad
+
+	function centrosNivelModalidad($idNivelEducativo, $idModalidad){
+		$this->db->select('*');
+		$this->db->from('conectividad as c');
+		$this->db->where('c.idNivelEducativo', $idNivelEducativo);
+		$this->db->where('c.idModalidad', $idModalidad);
+		$this->db->where('c.statusServicio', 1);
+		$query = $this->db->get();
+	    return $query->result_array();
+	}
+
+	function getProgramaByCentro($idConectividad){
+		$query = $this->db->get_where('programa', array('idConectividad' => $idConectividad));
+		return $query->row_array();
+	}
+
+	function getCentrosByPrograma($idCatPrograma, $idNivelEducativo, $idModalidad){
+		$this->db->select('cp.nombre as programa, tp.nombre as tipoprograma');
+		$this->db->from('conectividad as c');
+		$this->db->join('programa as p', 'p.idConectividad = c.idConectividad');
+	    $this->db->join('CA_Programas cp', 'cp.idCatPrograma = p.idCatPrograma');
+	    $this->db->join('CA_TipoPrograma tp', 'tp.idCatTipoPrograma=p.idCatTipoPrograma');
+		$this->db->where('p.status', 1);
+		$this->db->where('cp.IdCatPrograma', $idCatPrograma);
+		$this->db->where('c.idNivelEducativo', $idNivelEducativo);
+		$this->db->where('c.idModalidad', $idModalidad);
+		$query = $this->db->get();
+	    return $query->result_array();
+	}
+	  
 }
-
-//Funciones de busqueda para resumen general de conectividad
-
-function centrosNivelModalidad($idNivelEducativo, $idModalidad){
-	$this->db->select('c.idConectividad, p.idPrograma as idPrograma, p.idCatPrograma as idCatPrograma, cp.nombre as programa, tp.idCatTipoPrograma as idCatTipoPrograma, tp.nombre as tipoPrograma,');
-	$this->db->from('conectividad as c');
-	$this->db->join('programa p', 'p.idConectividad = c.idConectividad');
-	$this->db->join('CA_programas cp', 'cp.IdCatPrograma = p.IdCatPrograma');
-	$this->db->join('CA_Tipoprograma tp', 'tp.idCatTipoPrograma=p.idCatTipoPrograma');
-	$this->db->where_in('c.idNivelEducativo', $idNivelEducativo);
-	$this->db->where_in('c.idModalidad', $idModalidad);
-	$query = $this->db->get();
-    return $query->result_array();
-}
-
-
 
 ?>

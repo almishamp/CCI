@@ -9,9 +9,7 @@
     <button type="button" class="btn btn-primary" id="btnMostrar">Detalles</button>
     <button type="button" class="btn btn-primary" id="btnEditar">Editar</button>
     <!--button id="exportButton" class="btn btn-danger clearfix"><span class="fa fa-file-excel-o"></span> Exportar a Excel</button-->
-    <form method="POST" action="<?php echo base_url('conectividad/exportarExcel') ?>">
-        <input type="submit" value="Generar excel" class="btn btn-danger">
-    </form>
+
 </div>
 
 <section class="content-header">
@@ -43,13 +41,34 @@
                     </div> 
 
                     <br><br>
-                    <div class="collapse" id="collapseExample">
-                      <p>
-                        <button class="btn btn-primary" type="button" id="btn_modal_filtros_modalidad">Modalidad</button>
-                        <button class="btn btn-primary" type="button" id="btn_modal_filtros_municipio">Municipio</button>
+                    <div class="col-md-12">
+                      <br><br>
+                      <div class="col-md-7">
+                        
+                        
+                      </div>
+                      <div class="col-md-5">
+                        <div class="col-md-4">
+                        
+                        
+                        </div>
+                        <div class="col-md-3">
+                          <form method="POST" action="<?php echo base_url('conectividad/exportarExcel') ?>">
+                            <input type="submit" value="Excel Filtrado" class="btn btn-danger">
+                          </form>
+                        </div>
+                        <div class="col-md-1">
+                        
+                        
+                        </div>
+                        <div class="col-md-3">
+                          <form method="POST" action="<?php echo base_url('conectividad/exportarExcelGeneral') ?>">
+                            <input type="submit" value="Excel General" class="btn btn-danger">
+                          </form>
+                        </div>  
+                      </div>
 
-                      </p>
-                    </div >  
+                    </div> 
                   
                     <div class="row">
                       <div class="col-sm-12">
